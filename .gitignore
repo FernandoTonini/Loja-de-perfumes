@@ -4,8 +4,9 @@
 node_modules/
 .next/
 out/
-*.db
 *.db-journal
+# dev.db NÃO é ignorado para permitir deploy de demo no Vercel
+# Em produção real, use Postgres (Neon, Supabase, Vercel Postgres)
 prisma/migrations/
 .DS_Store
 Thumbs.db
