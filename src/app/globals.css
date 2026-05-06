@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --gold: #C9A84C;
+  --gold-light: #E5C76B;
+  --gold-dark: #9E7F2A;
+  --bg: #0A0A0A;
+  --surface: #111111;
+  --card: #1A1A1A;
+  --border: #2A2A2A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: #F5F5F5;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-cormorant);
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+::selection {
+  background: var(--gold);
+  color: #0A0A0A;
+}
+
+@layer components {
+  .gold-text {
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, #C9A84C 0%, #E5C76B 50%, #9E7F2A 100%);
+  }
+
+  .gold-border {
+    @apply border border-gold/30;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10;
+  }
+
+  .btn-gold {
+    @apply bg-gold hover:bg-gold-light text-dark font-semibold transition-all duration-300
+           hover:shadow-[0_0_30px_rgba(201,168,76,0.4)] active:scale-[0.98] rounded-none;
+  }
+
+  .btn-outline-gold {
+    @apply border border-gold text-gold hover:bg-gold hover:text-dark font-semibold
+           transition-all duration-300 rounded-none;
+  }
+
+  .section-title {
+    @apply font-serif text-4xl md:text-5xl text-white font-light tracking-wide;
+  }
+
+  .section-subtitle {
+    @apply text-sm tracking-[0.3em] uppercase text-gold font-sans font-medium;
+  }
+
+  .product-card-hover {
+    @apply transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:-translate-y-1;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  .gold-shimmer {
+    background: linear-gradient(90deg, #C9A84C 25%, #E5C76B 50%, #C9A84C 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .divider-gold {
+    @apply w-16 h-px bg-gold mx-auto my-4;
+  }
+
+  .mask-gradient-b {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

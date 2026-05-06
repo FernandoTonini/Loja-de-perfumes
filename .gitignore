@@ -1,0 +1,11 @@
+.env
+.env.local
+.env.*.local
+node_modules/
+.next/
+out/
+*.db
+*.db-journal
+prisma/migrations/
+.DS_Store
+Thumbs.db

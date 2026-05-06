@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String?
+  phone     String?
+  role      String   @default("CUSTOMER")
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  name            String
+  slug            String      @unique
+  description     String
+  price           Float
+  comparePrice    Float?
+  images          String      @default("[]")
+  categoryId      String
+  category        Category    @relation(fields: [categoryId], references: [id])
+  brand           String
+  ml              Int?
+  gender          String      @default("UNISEX")
+  topNotes        String?
+  heartNotes      String?
+  baseNotes       String?
+  inStock         Boolean     @default(true)
+  featured        Boolean     @default(false)
+  dropshippingId  String?
+  dropshippingSku String?
+  orderItems      OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Order {
+  id                  String      @id @default(cuid())
+  userId              String?
+  user                User?       @relation(fields: [userId], references: [id])
+  status              String      @default("PENDING")
+  subtotal            Float
+  shipping            Float       @default(0)
+  total               Float
+  items               OrderItem[]
+  shippingName        String
+  shippingEmail       String
+  shippingPhone       String?
+  shippingStreet      String
+  shippingNumber      String
+  shippingComplement  String?
+  shippingNeighborhood String
+  shippingCity        String
+  shippingState       String
+  shippingZip         String
+  paymentId           String?
+  paymentMethod       String?
+  paymentStatus       String      @default("PENDING")
+  dropshippingOrderId String?
+  dropshippingStatus  String?
+  trackingCode        String?
+  notes               String?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+  name      String
+  image     String?
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
