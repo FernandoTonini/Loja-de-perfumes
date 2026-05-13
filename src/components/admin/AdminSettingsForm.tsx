@@ -84,11 +84,149 @@ export function AdminSettingsForm({ settings }: Props) {
         </div>
       </div>
 
-      {/* Dropshipping */}
+      {/* Dropshipping Automation */}
       <div className="bg-dark-100 border border-dark-300 p-6">
-        <h2 className="font-serif text-xl text-white mb-2">Integração Dropshipping</h2>
+        <h2 className="font-serif text-xl text-white mb-1">Automação do Fornecedor (Drop Automático)</h2>
+        <p className="text-white/40 text-sm font-sans mb-1">
+          Configure o acesso ao site do seu fornecedor para envio automático dos pedidos.
+        </p>
+        <p className="text-gold/60 text-xs font-sans mb-6">
+          ✓ Compatível com franqueadosclubgo.com.br — clica &quot;Drop&quot; automaticamente.
+        </p>
+
+        <div className="space-y-4">
+          <Field
+            label="URL Base do Fornecedor"
+            settingKey="dropshipping_supplier_base_url"
+            placeholder="https://franqueadosclubgo.com.br/checkout/v3/start"
+            help="URL base sem o ID do produto e o token"
+          />
+          <Field
+            label="Token do Fornecedor"
+            settingKey="dropshipping_supplier_token"
+            placeholder="2cd7c96fc03c9a95dff9002a20f4fe534f1c7bb4"
+            type="password"
+            help="O hash/token que aparece na URL do checkout (é fixo por conta)"
+          />
+
+          <div className="pt-2">
+            <p className="text-white/30 text-xs font-sans mb-3">
+              A URL de cada produto será construída automaticamente:
+            </p>
+            <div className="bg-dark-300/50 p-3 font-mono text-xs text-white/40 break-all">
+              {values["dropshipping_supplier_base_url"] || "https://franqueadosclubgo.com.br/checkout/v3/start"}
+              /<span className="text-gold/60">{"{ID_PRODUTO_FORNECEDOR}"}</span>
+              /<span className="text-gold/40">{values["dropshipping_supplier_token"] ? "••••••••" : "{TOKEN}"}</span>
+              ?from_store=1&amp;country=BR
+            </div>
+          </div>
+
+          <div className="pt-2 border-t border-dark-300">
+            <p className="text-white/40 text-xs font-sans mb-3">
+              Credenciais de acesso ao portal do fornecedor (opcional — apenas se o site exigir login)
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <Field
+                label="E-mail do Fornecedor"
+                settingKey="dropshipping_supplier_email"
+                placeholder="seu@email.com"
+                type="email"
+                help="Login no site do fornecedor"
+              />
+              <Field
+                label="Senha do Fornecedor"
+                settingKey="dropshipping_supplier_password"
+                placeholder="••••••••"
+                type="password"
+                help="Senha do portal"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 p-4 bg-gold/5 border border-gold/20">
+          <p className="text-gold/80 text-xs font-sans font-medium mb-1">Como funciona a automação:</p>
+          <ol className="text-white/40 text-xs font-sans space-y-1 list-decimal list-inside">
+            <li>Cada produto precisa ter o &quot;ID do Fornecedor&quot; preenchido (em Admin → Produtos)</li>
+            <li>Quando um pedido é pago, clique no botão &quot;Auto&quot; nos Pedidos</li>
+            <li>O sistema abre o checkout do fornecedor, preenche os dados do cliente, marca &quot;Estou fazendo DROP&quot; e finaliza</li>
+            <li>O número do pedido é capturado e o pedido é registrado como enviado automaticamente</li>
+            <li>Uma mensagem é enviada via WhatsApp para sua atendente de suporte (se configurada abaixo)</li>
+          </ol>
+        </div>
+      </div>
+
+      {/* WhatsApp Notification */}
+      <div className="bg-dark-100 border border-dark-300 p-6">
+        <h2 className="font-serif text-xl text-white mb-1">Notificação por WhatsApp</h2>
         <p className="text-white/40 text-sm font-sans mb-6">
-          Configure a API do seu fornecedor. Quando um pedido for pago, ele será enviado automaticamente.
+          Após o drop ser concluído, uma mensagem é enviada automaticamente para sua atendente de suporte
+          com o número do pedido, dados do cliente e endereço do CD para usar como remetente.
+        </p>
+
+        <div className="space-y-4">
+          <Field
+            label="WhatsApp da Atendente de Suporte"
+            settingKey="dropshipping_support_whatsapp"
+            placeholder="5562999999999"
+            help="Número com código do país (55) e DDD, sem espaços ou traços"
+          />
+
+          <div className="pt-2 border-t border-dark-300">
+            <p className="text-white/40 text-xs font-sans mb-3">
+              Configuração Z-API (para envio totalmente automático sem clicar). Se não configurar, o
+              sistema vai gerar um link wa.me para você clicar e enviar.
+            </p>
+            <div className="space-y-3">
+              <Field
+                label="URL da Z-API"
+                settingKey="dropshipping_zap_api_url"
+                placeholder="https://api.z-api.io"
+                help="Endereço da API (mantenha o padrão se usar Z-API.io)"
+              />
+              <div className="grid grid-cols-2 gap-4">
+                <Field
+                  label="Instance ID"
+                  settingKey="dropshipping_zap_instance"
+                  placeholder="3DXXXXXX"
+                  help="ID da instância (encontre no painel Z-API)"
+                />
+                <Field
+                  label="Token Z-API"
+                  settingKey="dropshipping_zap_api_token"
+                  placeholder="••••••••••••••••"
+                  type="password"
+                  help="Token de autenticação"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 p-4 bg-gold/5 border border-gold/20">
+          <p className="text-gold/80 text-xs font-sans font-medium mb-1">Mensagem que será enviada:</p>
+          <pre className="text-white/40 text-xs font-sans whitespace-pre-wrap">
+{`*NOVO DROP - Pedido #12345*
+
+📦 Produto: Sauvage Dior 100ml
+👤 Cliente: João da Silva
+📍 Endereço: Rua X, 123, Bairro, Cidade-UF, CEP
+
+Remetente (usar endereço do CD):
+Av. Contorno, QD 35 Lt 39/40 Sala 6
+Jardim Colorado - Goiânia GO
+CEP 74474-100
+
+📐 Dimensões: 13x13x13cm | Peso: ~500g`}
+          </pre>
+        </div>
+      </div>
+
+      {/* Legacy API (optional) */}
+      <div className="bg-dark-100 border border-dark-300 p-6">
+        <h2 className="font-serif text-xl text-white mb-2">API do Fornecedor (Alternativo)</h2>
+        <p className="text-white/40 text-sm font-sans mb-6">
+          Somente se o fornecedor disponibilizar uma API REST. Deixe em branco se usar automação acima.
         </p>
 
         <div className="space-y-4">
@@ -138,7 +276,7 @@ export function AdminSettingsForm({ settings }: Props) {
             ) : (
               <>
                 <TestTube2 size={16} />
-                Testar Conexão
+                Testar Conexão API
               </>
             )}
           </button>
