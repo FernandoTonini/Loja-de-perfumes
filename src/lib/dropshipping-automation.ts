@@ -7,10 +7,12 @@
  *  3. Seleciona a opção "Estou fazendo DROP"
  *  4. Finaliza a compra (preço atacado)
  *  5. Captura o número do pedido gerado
- *  6. Envia notificação via WhatsApp para a atendente de suporte
+ *  6. Gera etiqueta de postagem via Melhor Envio
+ *  7. Envia número do pedido + etiqueta via WhatsApp para a atendente de suporte
  */
 
 import { prisma } from "@/lib/prisma";
+import { generateShippingLabel } from "@/lib/melhor-envio";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -32,6 +34,7 @@ export interface AutomationResult {
   screenshot?: string;
   productName?: string;
   whatsappSent?: boolean;
+  labelUrl?: string;
 }
 
 // ─── Settings ─────────────────────────────────────────────────────────────────
@@ -106,7 +109,8 @@ function buildDropMessage(
     shippingCity: string;
     shippingState: string;
     shippingZip: string;
-  }
+  },
+  labelUrl?: string
 ): string {
   const addr = [
     order.shippingStreet,
@@ -120,18 +124,24 @@ function buildDropMessage(
     .filter(Boolean)
     .join(", ");
 
-  return (
+  let msg =
     `*NOVO DROP - Pedido #${orderNumber}*\n\n` +
     `📦 Produto: ${productName}\n` +
     `👤 Cliente: ${order.shippingName}\n` +
     `📍 Endereço: ${addr}\n\n` +
-    `Remetente (usar endereço do CD):\n` +
+    `Remetente (CD GO Perfumaria):\n` +
     `Av. Contorno, QD 35 Lt 39/40 Sala 6\n` +
-    `Jardim Colorado - Goiânia GO\n` +
-    `CEP 74474-100\n\n` +
-    `📐 Dimensões: 13x13x13cm | Peso: ~500g\n\n` +
-    `_Mensagem gerada automaticamente_`
-  );
+    `Jardim Colorado - Goiânia GO — CEP 74474-100\n\n` +
+    `📐 Embalagem: 13x13x13cm | ~500g\n`;
+
+  if (labelUrl) {
+    msg += `\n🏷️ *ETIQUETA GERADA:*\n${labelUrl}\n`;
+  } else {
+    msg += `\n⚠️ Etiqueta: gerar no Melhor Envio e enviar junto\n`;
+  }
+
+  msg += `\n_Gerado automaticamente — Maison Parfums_`;
+  return msg;
 }
 
 // ─── Browser automation ────────────────────────────────────────────────────────
@@ -462,26 +472,42 @@ export async function automateDropshippingItem(
       },
     });
 
-    // 8. Envia mensagem WhatsApp para atendente de suporte
+    // 8. Gera etiqueta de postagem no Melhor Envio
+    let labelUrl: string | undefined;
+    let labelError: string | undefined;
+
+    const labelResult = await generateShippingLabel(orderId);
+    if (labelResult.success && labelResult.labelUrl) {
+      labelUrl = labelResult.labelUrl;
+    } else {
+      labelError = labelResult.error;
+    }
+
+    // 9. Envia mensagem WhatsApp para atendente de suporte (com link da etiqueta)
     let whatsappSent = false;
     let whatsappUrl: string | undefined;
 
     if (settings.supportWhatsapp) {
-      const msg = buildDropMessage(orderNumber, orderItem.product.name, order);
+      const msg = buildDropMessage(orderNumber, orderItem.product.name, order, labelUrl);
       const result = await sendWhatsAppMessage(settings, settings.supportWhatsapp, msg);
       whatsappSent = result.sent;
       whatsappUrl = result.manualUrl;
     }
 
+    const labelInfo = labelUrl
+      ? `Etiqueta gerada ✅`
+      : `Etiqueta: ${labelError || "configure Melhor Envio nas configurações"}`;
+
     return {
       success: true,
       message: whatsappSent
-        ? `Pedido #${orderNumber} enviado ao fornecedor e atendente notificada via WhatsApp!`
-        : `Pedido #${orderNumber} enviado! ${whatsappUrl ? `Abra para notificar a atendente: ${whatsappUrl}` : "Configure o WhatsApp nas configurações para notificação automática."}`,
+        ? `Pedido #${orderNumber} enviado! ${labelInfo}. Atendente notificada via WhatsApp com a etiqueta!`
+        : `Pedido #${orderNumber} enviado! ${labelInfo}.${whatsappUrl ? ` Clique para notificar a atendente: ${whatsappUrl}` : ""}`,
       orderNumber,
       screenshot,
       productName: orderItem.product.name,
       whatsappSent,
+      labelUrl,
     };
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Erro desconhecido na automação";

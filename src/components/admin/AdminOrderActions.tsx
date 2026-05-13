@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Truck, MoreHorizontal, Bot, X } from "lucide-react";
+import { Send, Truck, MoreHorizontal, Bot, X, Tag } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -21,6 +21,8 @@ interface AutomationResult {
   message: string;
   screenshot?: string;
   productName?: string;
+  labelUrl?: string;
+  whatsappSent?: boolean;
 }
 
 export function AdminOrderActions({ order }: Props) {
@@ -147,6 +149,38 @@ export function AdminOrderActions({ order }: Props) {
         </button>
       )}
 
+      {/* Gerar etiqueta */}
+      {order.dropshippingOrderId && !order.trackingCode && (
+        <button
+          onClick={async () => {
+            try {
+              setLoading("label");
+              const res = await axios.post("/api/shipping/label", { orderId: order.id });
+              if (res.data.labelUrl) {
+                window.open(res.data.labelUrl, "_blank");
+                toast.success("Etiqueta gerada! Abrindo para impressão...", {
+                  style: { background: "#1a1a1a", color: "#C9A84C", border: "1px solid #2a2a2a" },
+                });
+              }
+              router.refresh();
+            } catch {
+              toast.error("Erro ao gerar etiqueta. Verifique o token Melhor Envio.");
+            } finally {
+              setLoading(null);
+            }
+          }}
+          disabled={!!loading}
+          title="Gerar etiqueta de postagem (Melhor Envio)"
+          className="text-white/40 hover:text-gold transition-colors disabled:opacity-30"
+        >
+          {loading === "label" ? (
+            <span className="animate-pulse text-xs">...</span>
+          ) : (
+            <Tag size={15} />
+          )}
+        </button>
+      )}
+
       {/* Add tracking */}
       <button
         onClick={() => setShowTracking(!showTracking)}
@@ -233,9 +267,26 @@ export function AdminOrderActions({ order }: Props) {
 
             <p className="text-white/60 text-sm font-sans mb-4">{automationResult.message}</p>
 
+            {automationResult.labelUrl && (
+              <div className="mb-4 p-3 bg-green-500/10 border border-green-500/30">
+                <p className="text-green-400 text-xs font-sans font-medium mb-1">🏷️ Etiqueta gerada pelo Melhor Envio:</p>
+                <a
+                  href={automationResult.labelUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gold text-xs font-mono underline break-all"
+                >
+                  {automationResult.labelUrl}
+                </a>
+                <p className="text-white/30 text-xs mt-1">
+                  Link também enviado para a atendente via WhatsApp.
+                </p>
+              </div>
+            )}
+
             {automationResult.screenshot && (
               <div>
-                <p className="text-white/30 text-xs font-sans mb-2">Screenshot do resultado:</p>
+                <p className="text-white/30 text-xs font-sans mb-2">Screenshot do resultado no fornecedor:</p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`data:image/png;base64,${automationResult.screenshot}`}

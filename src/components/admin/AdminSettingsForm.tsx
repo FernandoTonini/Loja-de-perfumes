@@ -296,6 +296,66 @@ CEP 74474-100
         </div>
       </div>
 
+      {/* Melhor Envio */}
+      <div className="bg-dark-100 border border-dark-300 p-6">
+        <h2 className="font-serif text-xl text-white mb-1">Etiquetas de Postagem — Melhor Envio</h2>
+        <p className="text-white/40 text-sm font-sans mb-6">
+          Após o drop ser confirmado, o sistema gera a etiqueta automaticamente e envia o link para a atendente via WhatsApp.
+        </p>
+
+        <div className="space-y-4">
+          <Field
+            label="Token de Acesso (Melhor Envio)"
+            settingKey="melhorenvio_token"
+            placeholder="eyJ0eXAiOiJKV1QiLCJhbGc..."
+            type="password"
+            help="Gere em: melhorenvio.com.br → Configurações → Tokens e API"
+          />
+
+          <div>
+            <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">Ambiente</label>
+            <select
+              value={values["melhorenvio_sandbox"] || "false"}
+              onChange={(e) => handleChange("melhorenvio_sandbox", e.target.value)}
+              className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm font-sans transition-colors"
+            >
+              <option value="false">Produção (conta real)</option>
+              <option value="true">Sandbox (testes)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">Serviço Padrão de Entrega</label>
+            <select
+              value={values["melhorenvio_service"] || "1"}
+              onChange={(e) => handleChange("melhorenvio_service", e.target.value)}
+              className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm font-sans transition-colors"
+            >
+              <option value="1">Correios PAC (mais barato)</option>
+              <option value="2">Correios SEDEX (mais rápido)</option>
+              <option value="3">Jadlog .Package</option>
+              <option value="4">Jadlog .Com</option>
+              <option value="17">Azul Cargo</option>
+            </select>
+            <p className="text-white/30 text-xs mt-1 font-sans">O mais barato disponível será usado caso este não atenda ao CEP</p>
+          </div>
+        </div>
+
+        <div className="mt-4 p-4 bg-gold/5 border border-gold/20">
+          <p className="text-gold/80 text-xs font-sans font-medium mb-2">Como obter o Token do Melhor Envio:</p>
+          <ol className="text-white/40 text-xs font-sans space-y-1 list-decimal list-inside">
+            <li>Acesse melhorenvio.com.br e faça login</li>
+            <li>Vá em Configurações → Tokens e API</li>
+            <li>Clique em &quot;Gerar token&quot;</li>
+            <li>Selecione as permissões: Envios (leitura e escrita), Carrinho (leitura e escrita)</li>
+            <li>Copie o token e cole acima</li>
+          </ol>
+          <p className="text-white/30 text-xs font-sans mt-2">
+            ⚠️ Certifique-se de ter saldo em sua conta Melhor Envio para comprar as etiquetas.
+          </p>
+        </div>
+      </div>
+
       {/* Save */}
       <button
         onClick={handleSave}

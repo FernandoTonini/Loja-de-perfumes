@@ -6,7 +6,7 @@
  * Uso: npx ts-node --project tsconfig.json -e esModuleInterop scripts/import-supplier-products.ts
  */
 
-import puppeteer from "puppeteer";
+import puppeteer, { Page } from "puppeteer";
 import { PrismaClient } from "@prisma/client";
 import path from "path";
 
@@ -101,7 +101,7 @@ function parsePrice(text: string): number {
 
 // ─── Scraping ─────────────────────────────────────────────────────────────────
 
-async function login(page: puppeteer.Page): Promise<void> {
+async function login(page: Page): Promise<void> {
   console.log("🔐 Fazendo login no fornecedor...");
   await page.goto(`${SUPPLIER_URL}/account/login/`, { waitUntil: "networkidle2", timeout: 30000 });
 
@@ -121,7 +121,7 @@ async function login(page: puppeteer.Page): Promise<void> {
 }
 
 async function scrapeProductPage(
-  page: puppeteer.Page,
+  page: Page,
   productUrl: string,
   categorySlug: string
 ): Promise<SupplierProduct | null> {
@@ -250,7 +250,7 @@ async function scrapeProductPage(
 }
 
 async function scrapeCategory(
-  page: puppeteer.Page,
+  page: Page,
   categoryPath: string,
   ourCategorySlug: string
 ): Promise<SupplierProduct[]> {
@@ -378,7 +378,6 @@ async function main(): Promise<void> {
       "--ignore-certificate-errors",
       "--ignore-ssl-errors",
     ],
-    ignoreHTTPSErrors: true,
     defaultViewport: { width: 1280, height: 800 },
   });
 
