@@ -128,9 +128,13 @@ async function scrapeProductPage(
   try {
     await page.goto(productUrl, { waitUntil: "networkidle2", timeout: 25000 });
 
+    // Rolar a página para forçar o carregamento das imagens lazy-load
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight / 2));
+    await new Promise((r) => setTimeout(r, 1500));
+
     const data = await page.evaluate((catSlug: string) => {
       // Nome
-      const nameEl = document.querySelector("h1, .product-title, [class*='product__title']");
+      const nameEl = document.querySelector("h1, .product-title, [class*='product__title'], [class*='product-name']");
       const name = nameEl?.textContent?.trim() || "";
 
       // Preço — busca por qualquer elemento com R$ no texto
@@ -138,7 +142,7 @@ async function scrapeProductPage(
       const priceSelectors = [
         ".price__current", ".price-item--sale", ".price-item--regular",
         ".price-item", ".product-price", "[class*='product__price']",
-        "[class*='price']", ".money",
+        "[class*='price']", ".money", ".js-price-display",
       ];
       for (const sel of priceSelectors) {
         const el = document.querySelector(sel);
@@ -159,46 +163,90 @@ async function scrapeProductPage(
       const comparePriceText = comparePriceEl?.textContent?.trim() || "";
 
       // Estoque
-      const stockEl = document.querySelector(".badge--soldout, [class*='sold-out'], [class*='esgotado']");
-      const soldOutBadge = !!stockEl;
-      const addToCartBtn = document.querySelector('button[name="add"], .btn--add-to-cart, [class*="add-to-cart"]');
-      const btnDisabled = addToCartBtn ? (addToCartBtn as HTMLButtonElement).disabled : true;
-      const inStock = !soldOutBadge && !btnDisabled;
+      const pageText = document.body.innerText.toLowerCase();
+      const soldOutBadge = !!document.querySelector(".badge--soldout, [class*='sold-out'], [class*='esgotado']");
+      const hasEsgotado = pageText.includes("esgotado") || pageText.includes("sem estoque") || pageText.includes("indisponível");
+      const addToCartBtn = document.querySelector('button[name="add"], .btn--add-to-cart, [class*="add-to-cart"], .js-buy-btn, [class*="buy-btn"], button[type="submit"]');
+      const btnDisabled = addToCartBtn ? (addToCartBtn as HTMLButtonElement).disabled : false;
+      const inStock = !soldOutBadge && !hasEsgotado && !btnDisabled;
 
-      // Imagens
-      const imgs = Array.from(
-        document.querySelectorAll(".product__media img, .product-images img, [class*='product'] img")
-      )
-        .map((img) => {
-          const src = (img as HTMLImageElement).src || (img as HTMLImageElement).dataset.src || "";
-          return src.startsWith("//") ? `https:${src}` : src;
-        })
-        .filter((src) => src.includes("http") && !src.includes("icon") && !src.includes("logo"))
-        .slice(0, 4);
+      // Imagens — múltiplas estratégias para Tienda Nube
+      const imgSet = new Set<string>();
+
+      // 1. Imagens em <img> com src real (não placeholder)
+      document.querySelectorAll("img").forEach((img) => {
+        const src = img.getAttribute("data-zoom-image") ||
+                    img.getAttribute("data-src") ||
+                    img.getAttribute("data-lazy-src") ||
+                    img.getAttribute("data-original") ||
+                    img.src || "";
+        const cleaned = src.startsWith("//") ? `https:${src}` : src;
+        if (
+          cleaned.startsWith("http") &&
+          !cleaned.includes("placeholder") &&
+          !cleaned.includes("empty") &&
+          !cleaned.includes("icon") &&
+          !cleaned.includes("logo") &&
+          !cleaned.includes("avatar") &&
+          (cleaned.includes("mitiendanube") || cleaned.includes("cloudinary") ||
+           cleaned.includes("shopify") || cleaned.includes("cdn") || cleaned.includes("image"))
+        ) {
+          imgSet.add(cleaned);
+        }
+      });
+
+      // 2. Srcset attributes
+      document.querySelectorAll("img[srcset], source[srcset]").forEach((el) => {
+        const srcset = el.getAttribute("srcset") || "";
+        const parts = srcset.split(",").map((s) => s.trim().split(" ")[0]).filter(Boolean);
+        parts.forEach((src) => {
+          const cleaned = src.startsWith("//") ? `https:${src}` : src;
+          if (cleaned.startsWith("http") && !cleaned.includes("placeholder") && !cleaned.includes("empty")) {
+            imgSet.add(cleaned);
+          }
+        });
+      });
+
+      // 3. JSON-LD ou meta og:image
+      const metaImg = document.querySelector('meta[property="og:image"]')?.getAttribute("content");
+      if (metaImg && !metaImg.includes("placeholder")) imgSet.add(metaImg);
+
+      // 4. Script tags com JSON de produto (Tienda Nube / Shopify)
+      document.querySelectorAll("script").forEach((script) => {
+        const text = script.textContent || "";
+        const matches = text.match(/https?:\/\/[^"' ]+\.(jpg|jpeg|png|webp)[^"' ]*/gi) || [];
+        matches.forEach((url) => {
+          if (!url.includes("placeholder") && !url.includes("empty") && !url.includes("icon")) {
+            imgSet.add(url);
+          }
+        });
+      });
+
+      const imgs = Array.from(imgSet).slice(0, 4);
 
       // Descrição
-      const descEl = document.querySelector(".product__description, [class*='product-description'], .rte");
+      const descEl = document.querySelector(".product__description, [class*='product-description'], .rte, [class*='description']");
       const description = descEl?.textContent?.trim() || "";
 
       // Variant ID (para URL de checkout)
-      const variantInputs = document.querySelectorAll('input[name="id"], [name="id"]');
-      const variantId = variantInputs.length > 0
-        ? (variantInputs[0] as HTMLInputElement).value
-        : null;
-
-      // Tenta pegar do JSON do Shopify
-      let shopifyVariantId = variantId;
+      let shopifyVariantId: string | null = null;
       try {
         const scriptTags = Array.from(document.querySelectorAll("script"));
         for (const script of scriptTags) {
           const content = script.textContent || "";
-          const idMatch = content.match(/"id"\s*:\s*(\d{8,})/);
+          // Tienda Nube usa "product_id" ou "variant_id"
+          const idMatch = content.match(/"(?:variant_id|product_id|id)"\s*:\s*(\d{7,})/);
           if (idMatch) {
             shopifyVariantId = idMatch[1];
             break;
           }
         }
-      } catch {}
+        // Fallback: busca direto no HTML por input hidden ou data-variant-id
+        if (!shopifyVariantId) {
+          const variantEl = document.querySelector('[name="id"], [data-variant-id], [data-product-id]');
+          shopifyVariantId = variantEl?.getAttribute("value") || variantEl?.getAttribute("data-variant-id") || variantEl?.getAttribute("data-product-id") || null;
+        }
+      } catch { /* ignore */ }
 
       return {
         name,

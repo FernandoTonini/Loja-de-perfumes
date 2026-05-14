@@ -5,6 +5,8 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "cdn.pixabay.com" },
       { protocol: "https", hostname: "**.supabase.co" },
+      { protocol: "https", hostname: "**.mitiendanube.com" },
+      { protocol: "https", hostname: "franqueadosclubgo.com.br" },
     ],
   },
   outputFileTracingIncludes: {
