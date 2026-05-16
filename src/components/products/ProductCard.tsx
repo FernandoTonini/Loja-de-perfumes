@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
 import { Product } from "@/types";
@@ -39,12 +38,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
         {/* Image */}
         <div className="relative aspect-[3/4] bg-cream-50 overflow-hidden">
           {images[0] ? (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={images[0]}
               alt={product.name}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">

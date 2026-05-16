@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Category } from "@/types";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 interface Props {
@@ -28,12 +27,12 @@ export function Categories({ categories }: Props) {
             >
               {/* Background image */}
               {category.image ? (
-                <Image
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
                   src={category.image}
                   alt={category.name}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-cream-50 to-cream-100" />

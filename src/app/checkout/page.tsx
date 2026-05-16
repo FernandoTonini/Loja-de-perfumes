@@ -9,7 +9,6 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { CheckoutFormData } from "@/types";
 import { ArrowRight, Lock, CreditCard, QrCode } from "lucide-react";
-import Image from "next/image";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -192,7 +191,10 @@ export default function CheckoutPage() {
                   {items.map((item) => (
                     <div key={item.productId} className="flex gap-3">
                       <div className="relative w-14 h-16 bg-cream-50 flex-shrink-0 overflow-hidden">
-                        {item.image && <Image src={item.image} alt={item.name} fill className="object-cover" />}
+                        {item.image && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-ink/80 text-xs font-sans font-medium line-clamp-2">{item.name}</p>

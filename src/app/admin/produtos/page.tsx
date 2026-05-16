@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { formatPrice, parseImages } from "@/lib/utils";
 import Link from "next/link";
 import { Plus, Edit, Package } from "lucide-react";
-import Image from "next/image";
 import { AdminProductActions } from "@/components/admin/AdminProductActions";
 
 export default async function AdminProductsPage() {
@@ -49,7 +48,8 @@ export default async function AdminProductsPage() {
                       <div className="flex items-center gap-3">
                         <div className="relative w-12 h-14 bg-cream-50 flex-shrink-0 overflow-hidden border border-cream-200">
                           {images[0] ? (
-                            <Image src={images[0]} alt={product.name} fill className="object-cover" />
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={images[0]} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
                           ) : (
                             <div className="absolute inset-0 flex items-center justify-center">
                               <Package size={16} className="text-cream-200" />

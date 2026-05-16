@@ -1,7 +1,6 @@
 "use client";
 
 import { X, Minus, Plus, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
@@ -85,7 +84,8 @@ export function CartDrawer() {
                 {/* Image */}
                 <div className="relative w-20 h-24 bg-cream-50 flex-shrink-0 overflow-hidden">
                   {item.image && (
-                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
                   )}
                 </div>
 

@@ -2,7 +2,6 @@
 
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, ArrowLeft } from "lucide-react";
 
@@ -49,7 +48,8 @@ export default function CartPage() {
                 {/* Image */}
                 <div className="relative w-24 h-28 bg-cream-50 flex-shrink-0 overflow-hidden">
                   {item.image && (
-                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
                   )}
                 </div>
 
