@@ -14,7 +14,9 @@ interface ProductCardProps {
 
 export function ProductCard({ product, className }: ProductCardProps) {
   const { addItem } = useCart();
-  const images = parseImages(product.images as unknown as string);
+  const images = Array.isArray(product.images)
+    ? product.images
+    : parseImages(product.images as unknown as string);
   const discount = product.comparePrice
     ? Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100)
     : 0;
