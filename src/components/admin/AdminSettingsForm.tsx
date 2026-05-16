@@ -23,9 +23,7 @@ export function AdminSettingsForm({ settings }: Props) {
     try {
       setLoading(true);
       await axios.post("/api/settings", { settings: values });
-      toast.success("Configurações salvas!", {
-        style: { background: "#1a1a1a", color: "#C9A84C", border: "1px solid #2a2a2a" },
-      });
+      toast.success("Configurações salvas!");
     } catch {
       toast.error("Erro ao salvar configurações");
     } finally {
@@ -55,23 +53,23 @@ export function AdminSettingsForm({ settings }: Props) {
     help?: string;
   }) => (
     <div>
-      <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">{label}</label>
+      <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">{label}</label>
       <input
         type={type}
         value={values[settingKey] || ""}
         onChange={(e) => handleChange(settingKey, e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm font-sans placeholder-white/20 transition-colors"
+        className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm font-sans placeholder-ink/30 transition-colors"
       />
-      {help && <p className="text-white/30 text-xs mt-1 font-sans">{help}</p>}
+      {help && <p className="text-ink/30 text-xs mt-1 font-sans">{help}</p>}
     </div>
   );
 
   return (
     <div className="space-y-8 max-w-2xl">
       {/* Store Settings */}
-      <div className="bg-dark-100 border border-dark-300 p-6">
-        <h2 className="font-serif text-xl text-white mb-6">Dados da Loja</h2>
+      <div className="bg-white border border-cream-200 p-6">
+        <h2 className="font-serif text-xl text-ink mb-6">Dados da Loja</h2>
         <div className="space-y-4">
           <Field label="Nome da Loja" settingKey="store_name" placeholder="Maison Parfums" />
           <Field label="E-mail de Contato" settingKey="store_email" placeholder="contato@sualore.com.br" type="email" />
@@ -85,12 +83,12 @@ export function AdminSettingsForm({ settings }: Props) {
       </div>
 
       {/* Dropshipping Automation */}
-      <div className="bg-dark-100 border border-dark-300 p-6">
-        <h2 className="font-serif text-xl text-white mb-1">Automação do Fornecedor (Drop Automático)</h2>
-        <p className="text-white/40 text-sm font-sans mb-1">
+      <div className="bg-white border border-cream-200 p-6">
+        <h2 className="font-serif text-xl text-ink mb-1">Automação do Fornecedor (Drop Automático)</h2>
+        <p className="text-ink-muted text-sm font-sans mb-1">
           Configure o acesso ao site do seu fornecedor para envio automático dos pedidos.
         </p>
-        <p className="text-gold/60 text-xs font-sans mb-6">
+        <p className="text-gold-dark/80 text-xs font-sans mb-6">
           ✓ Compatível com franqueadosclubgo.com.br — clica &quot;Drop&quot; automaticamente.
         </p>
 
@@ -110,19 +108,19 @@ export function AdminSettingsForm({ settings }: Props) {
           />
 
           <div className="pt-2">
-            <p className="text-white/30 text-xs font-sans mb-3">
+            <p className="text-ink/30 text-xs font-sans mb-3">
               A URL de cada produto será construída automaticamente:
             </p>
-            <div className="bg-dark-300/50 p-3 font-mono text-xs text-white/40 break-all">
+            <div className="bg-cream-100 p-3 font-mono text-xs text-ink-muted break-all">
               {values["dropshipping_supplier_base_url"] || "https://franqueadosclubgo.com.br/checkout/v3/start"}
-              /<span className="text-gold/60">{"{ID_PRODUTO_FORNECEDOR}"}</span>
+              /<span className="text-gold-dark/80">{"{ID_PRODUTO_FORNECEDOR}"}</span>
               /<span className="text-gold/40">{values["dropshipping_supplier_token"] ? "••••••••" : "{TOKEN}"}</span>
               ?from_store=1&amp;country=BR
             </div>
           </div>
 
-          <div className="pt-2 border-t border-dark-300">
-            <p className="text-white/40 text-xs font-sans mb-3">
+          <div className="pt-2 border-t border-cream-200">
+            <p className="text-ink-muted text-xs font-sans mb-3">
               Credenciais de acesso ao portal do fornecedor (opcional — apenas se o site exigir login)
             </p>
             <div className="grid grid-cols-2 gap-4">
@@ -145,8 +143,8 @@ export function AdminSettingsForm({ settings }: Props) {
         </div>
 
         <div className="mt-4 p-4 bg-gold/5 border border-gold/20">
-          <p className="text-gold/80 text-xs font-sans font-medium mb-1">Como funciona a automação:</p>
-          <ol className="text-white/40 text-xs font-sans space-y-1 list-decimal list-inside">
+          <p className="text-gold-dark text-xs font-sans font-medium mb-1">Como funciona a automação:</p>
+          <ol className="text-ink-muted text-xs font-sans space-y-1 list-decimal list-inside">
             <li>Cada produto precisa ter o &quot;ID do Fornecedor&quot; preenchido (em Admin → Produtos)</li>
             <li>Quando um pedido é pago, clique no botão &quot;Auto&quot; nos Pedidos</li>
             <li>O sistema abre o checkout do fornecedor, preenche os dados do cliente, marca &quot;Estou fazendo DROP&quot; e finaliza</li>
@@ -157,9 +155,9 @@ export function AdminSettingsForm({ settings }: Props) {
       </div>
 
       {/* WhatsApp Notification */}
-      <div className="bg-dark-100 border border-dark-300 p-6">
-        <h2 className="font-serif text-xl text-white mb-1">Notificação por WhatsApp</h2>
-        <p className="text-white/40 text-sm font-sans mb-6">
+      <div className="bg-white border border-cream-200 p-6">
+        <h2 className="font-serif text-xl text-ink mb-1">Notificação por WhatsApp</h2>
+        <p className="text-ink-muted text-sm font-sans mb-6">
           Após o drop ser concluído, uma mensagem é enviada automaticamente para sua atendente de suporte
           com o número do pedido, dados do cliente e endereço do CD para usar como remetente.
         </p>
@@ -172,8 +170,8 @@ export function AdminSettingsForm({ settings }: Props) {
             help="Número com código do país (55) e DDD, sem espaços ou traços"
           />
 
-          <div className="pt-2 border-t border-dark-300">
-            <p className="text-white/40 text-xs font-sans mb-3">
+          <div className="pt-2 border-t border-cream-200">
+            <p className="text-ink-muted text-xs font-sans mb-3">
               Configuração Z-API (para envio totalmente automático sem clicar). Se não configurar, o
               sistema vai gerar um link wa.me para você clicar e enviar.
             </p>
@@ -204,8 +202,8 @@ export function AdminSettingsForm({ settings }: Props) {
         </div>
 
         <div className="mt-4 p-4 bg-gold/5 border border-gold/20">
-          <p className="text-gold/80 text-xs font-sans font-medium mb-1">Mensagem que será enviada:</p>
-          <pre className="text-white/40 text-xs font-sans whitespace-pre-wrap">
+          <p className="text-gold-dark text-xs font-sans font-medium mb-1">Mensagem que será enviada:</p>
+          <pre className="text-ink-muted text-xs font-sans whitespace-pre-wrap">
 {`*NOVO DROP - Pedido #12345*
 
 📦 Produto: Sauvage Dior 100ml
@@ -223,9 +221,9 @@ CEP 74474-100
       </div>
 
       {/* Legacy API (optional) */}
-      <div className="bg-dark-100 border border-dark-300 p-6">
-        <h2 className="font-serif text-xl text-white mb-2">API do Fornecedor (Alternativo)</h2>
-        <p className="text-white/40 text-sm font-sans mb-6">
+      <div className="bg-white border border-cream-200 p-6">
+        <h2 className="font-serif text-xl text-ink mb-2">API do Fornecedor (Alternativo)</h2>
+        <p className="text-ink-muted text-sm font-sans mb-6">
           Somente se o fornecedor disponibilizar uma API REST. Deixe em branco se usar automação acima.
         </p>
 
@@ -244,11 +242,11 @@ CEP 74474-100
           />
 
           <div>
-            <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">Tipo de Autenticação</label>
+            <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">Tipo de Autenticação</label>
             <select
               value={values["dropshipping_auth_type"] || "api_key"}
               onChange={(e) => handleChange("dropshipping_auth_type", e.target.value)}
-              className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm font-sans transition-colors"
+              className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm font-sans transition-colors"
             >
               <option value="api_key">API Key (Header X-API-Key)</option>
               <option value="bearer">Bearer Token (Authorization: Bearer)</option>
@@ -265,7 +263,7 @@ CEP 74474-100
         </div>
 
         {/* Test connection */}
-        <div className="mt-6 pt-6 border-t border-dark-300">
+        <div className="mt-6 pt-6 border-t border-cream-200">
           <button
             onClick={handleTestDropshipping}
             disabled={testing}
@@ -284,11 +282,11 @@ CEP 74474-100
           {testResult && (
             <div className={`mt-4 p-4 flex items-center gap-3 border ${testResult.success ? "border-green-500/30 bg-green-500/5" : "border-red-500/30 bg-red-500/5"}`}>
               {testResult.success ? (
-                <CheckCircle size={18} className="text-green-400 flex-shrink-0" />
+                <CheckCircle size={18} className="text-green-700 flex-shrink-0" />
               ) : (
-                <XCircle size={18} className="text-red-400 flex-shrink-0" />
+                <XCircle size={18} className="text-red-500 flex-shrink-0" />
               )}
-              <p className={`text-sm font-sans ${testResult.success ? "text-green-400" : "text-red-400"}`}>
+              <p className={`text-sm font-sans ${testResult.success ? "text-green-700" : "text-red-500"}`}>
                 {testResult.message}
               </p>
             </div>
@@ -297,9 +295,9 @@ CEP 74474-100
       </div>
 
       {/* Melhor Envio */}
-      <div className="bg-dark-100 border border-dark-300 p-6">
-        <h2 className="font-serif text-xl text-white mb-1">Etiquetas de Postagem — Melhor Envio</h2>
-        <p className="text-white/40 text-sm font-sans mb-6">
+      <div className="bg-white border border-cream-200 p-6">
+        <h2 className="font-serif text-xl text-ink mb-1">Etiquetas de Postagem — Melhor Envio</h2>
+        <p className="text-ink-muted text-sm font-sans mb-6">
           Após o drop ser confirmado, o sistema gera a etiqueta automaticamente e envia o link para a atendente via WhatsApp.
         </p>
 
@@ -313,11 +311,11 @@ CEP 74474-100
           />
 
           <div>
-            <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">Ambiente</label>
+            <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">Ambiente</label>
             <select
               value={values["melhorenvio_sandbox"] || "false"}
               onChange={(e) => handleChange("melhorenvio_sandbox", e.target.value)}
-              className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm font-sans transition-colors"
+              className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm font-sans transition-colors"
             >
               <option value="false">Produção (conta real)</option>
               <option value="true">Sandbox (testes)</option>
@@ -325,11 +323,11 @@ CEP 74474-100
           </div>
 
           <div>
-            <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">Serviço Padrão de Entrega</label>
+            <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">Serviço Padrão de Entrega</label>
             <select
               value={values["melhorenvio_service"] || "1"}
               onChange={(e) => handleChange("melhorenvio_service", e.target.value)}
-              className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm font-sans transition-colors"
+              className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm font-sans transition-colors"
             >
               <option value="1">Correios PAC (mais barato)</option>
               <option value="2">Correios SEDEX (mais rápido)</option>
@@ -337,20 +335,20 @@ CEP 74474-100
               <option value="4">Jadlog .Com</option>
               <option value="17">Azul Cargo</option>
             </select>
-            <p className="text-white/30 text-xs mt-1 font-sans">O mais barato disponível será usado caso este não atenda ao CEP</p>
+            <p className="text-ink/30 text-xs mt-1 font-sans">O mais barato disponível será usado caso este não atenda ao CEP</p>
           </div>
         </div>
 
         <div className="mt-4 p-4 bg-gold/5 border border-gold/20">
-          <p className="text-gold/80 text-xs font-sans font-medium mb-2">Como obter o Token do Melhor Envio:</p>
-          <ol className="text-white/40 text-xs font-sans space-y-1 list-decimal list-inside">
+          <p className="text-gold-dark text-xs font-sans font-medium mb-2">Como obter o Token do Melhor Envio:</p>
+          <ol className="text-ink-muted text-xs font-sans space-y-1 list-decimal list-inside">
             <li>Acesse melhorenvio.com.br e faça login</li>
             <li>Vá em Configurações → Tokens e API</li>
             <li>Clique em &quot;Gerar token&quot;</li>
             <li>Selecione as permissões: Envios (leitura e escrita), Carrinho (leitura e escrita)</li>
             <li>Copie o token e cole acima</li>
           </ol>
-          <p className="text-white/30 text-xs font-sans mt-2">
+          <p className="text-ink/30 text-xs font-sans mt-2">
             ⚠️ Certifique-se de ter saldo em sua conta Melhor Envio para comprar as etiquetas.
           </p>
         </div>

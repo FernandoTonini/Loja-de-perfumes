@@ -41,7 +41,6 @@ export function AdminOrderActions({ order }: Props) {
       const data = response.data;
 
       if (data.results) {
-        // Multiple items
         const allOk = data.results.every((r: AutomationResult) => r.success);
         const lastResult = data.results[data.results.length - 1] as AutomationResult;
         setAutomationResult({ ...lastResult, success: allOk });
@@ -50,9 +49,7 @@ export function AdminOrderActions({ order }: Props) {
       }
 
       if (data.success || (data.results && data.results.some((r: AutomationResult) => r.success))) {
-        toast.success("Pedido enviado ao fornecedor!", {
-          style: { background: "#1a1a1a", color: "#C9A84C", border: "1px solid #2a2a2a" },
-        });
+        toast.success("Pedido enviado ao fornecedor!");
         router.refresh();
       } else {
         toast.error("Erro ao enviar ao fornecedor. Veja os detalhes.");
@@ -107,10 +104,10 @@ export function AdminOrderActions({ order }: Props) {
           onClick={automateDropshipping}
           disabled={!!loading}
           title="Enviar automaticamente ao fornecedor (bot)"
-          className="text-gold/60 hover:text-gold transition-colors disabled:opacity-30 flex items-center gap-1"
+          className="text-gold-dark/70 hover:text-gold-dark transition-colors disabled:opacity-30 flex items-center gap-1"
         >
           {loading === "dropshipping" ? (
-            <span className="animate-pulse text-xs text-gold/60">Enviando...</span>
+            <span className="animate-pulse text-xs text-gold-dark/70">Enviando...</span>
           ) : (
             <>
               <Bot size={15} />
@@ -127,9 +124,7 @@ export function AdminOrderActions({ order }: Props) {
             try {
               setLoading("manual");
               await axios.post("/api/dropshipping", { orderId: order.id });
-              toast.success("Enviado via API!", {
-                style: { background: "#1a1a1a", color: "#C9A84C", border: "1px solid #2a2a2a" },
-              });
+              toast.success("Enviado via API!");
               router.refresh();
             } catch {
               toast.error("Erro ao enviar manualmente");
@@ -139,7 +134,7 @@ export function AdminOrderActions({ order }: Props) {
           }}
           disabled={!!loading}
           title="Enviar via API (método alternativo)"
-          className="text-white/30 hover:text-white/60 transition-colors disabled:opacity-30"
+          className="text-ink/30 hover:text-ink/60 transition-colors disabled:opacity-30"
         >
           {loading === "manual" ? (
             <span className="animate-pulse text-xs">...</span>
@@ -158,9 +153,7 @@ export function AdminOrderActions({ order }: Props) {
               const res = await axios.post("/api/shipping/label", { orderId: order.id });
               if (res.data.labelUrl) {
                 window.open(res.data.labelUrl, "_blank");
-                toast.success("Etiqueta gerada! Abrindo para impressão...", {
-                  style: { background: "#1a1a1a", color: "#C9A84C", border: "1px solid #2a2a2a" },
-                });
+                toast.success("Etiqueta gerada! Abrindo para impressão...");
               }
               router.refresh();
             } catch {
@@ -171,7 +164,7 @@ export function AdminOrderActions({ order }: Props) {
           }}
           disabled={!!loading}
           title="Gerar etiqueta de postagem (Melhor Envio)"
-          className="text-white/40 hover:text-gold transition-colors disabled:opacity-30"
+          className="text-ink/40 hover:text-gold-dark transition-colors disabled:opacity-30"
         >
           {loading === "label" ? (
             <span className="animate-pulse text-xs">...</span>
@@ -185,7 +178,7 @@ export function AdminOrderActions({ order }: Props) {
       <button
         onClick={() => setShowTracking(!showTracking)}
         title="Adicionar rastreio"
-        className="text-white/40 hover:text-gold transition-colors"
+        className="text-ink/40 hover:text-gold-dark transition-colors"
       >
         <Truck size={15} />
       </button>
@@ -193,19 +186,21 @@ export function AdminOrderActions({ order }: Props) {
       {/* More options */}
       <button
         onClick={() => setShowMenu(!showMenu)}
-        className="text-white/40 hover:text-gold transition-colors"
+        className="text-ink/40 hover:text-gold-dark transition-colors"
       >
         <MoreHorizontal size={16} />
       </button>
 
       {/* Status menu */}
       {showMenu && (
-        <div className="absolute right-0 top-8 w-44 bg-dark-100 border border-dark-300 shadow-xl z-50">
+        <div className="absolute right-0 top-8 w-44 bg-white border border-cream-200 shadow-lg z-50">
           {["PENDING", "PAID", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"].map((s) => (
             <button
               key={s}
               onClick={() => updateStatus(s)}
-              className={`w-full text-left px-4 py-2.5 text-xs font-sans hover:bg-dark-200 transition-colors ${order.status === s ? "text-gold" : "text-white/60"}`}
+              className={`w-full text-left px-4 py-2.5 text-xs font-sans hover:bg-cream-50 transition-colors ${
+                order.status === s ? "text-gold-dark font-semibold" : "text-ink/70"
+              }`}
             >
               {s === "PENDING"
                 ? "Aguardando"
@@ -225,12 +220,12 @@ export function AdminOrderActions({ order }: Props) {
 
       {/* Tracking input */}
       {showTracking && (
-        <div className="absolute right-0 top-8 w-52 bg-dark-100 border border-dark-300 shadow-xl z-50 p-3">
+        <div className="absolute right-0 top-8 w-52 bg-white border border-cream-200 shadow-lg z-50 p-3">
           <input
             value={trackingInput}
             onChange={(e) => setTrackingInput(e.target.value)}
             placeholder="Código de rastreio"
-            className="w-full bg-dark-200 border border-dark-300 px-3 py-2 text-white text-xs font-sans outline-none focus:border-gold/50 mb-2"
+            className="w-full bg-cream-50 border border-cream-200 px-3 py-2 text-ink text-xs font-sans outline-none focus:border-gold/60 mb-2"
           />
           <button
             onClick={addTracking}
@@ -244,41 +239,41 @@ export function AdminOrderActions({ order }: Props) {
 
       {/* Automation result modal */}
       {automationResult && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-dark-100 border border-dark-300 max-w-lg w-full p-6">
+        <div className="fixed inset-0 bg-ink/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white border border-cream-200 max-w-lg w-full p-6 shadow-2xl">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <p
-                  className={`text-sm font-sans font-medium ${automationResult.success ? "text-green-400" : "text-red-400"}`}
+                  className={`text-sm font-sans font-medium ${automationResult.success ? "text-green-700" : "text-red-600"}`}
                 >
                   {automationResult.success ? "✓ Enviado com sucesso!" : "✗ Falha na automação"}
                 </p>
                 {automationResult.productName && (
-                  <p className="text-white/40 text-xs mt-0.5">{automationResult.productName}</p>
+                  <p className="text-ink-muted text-xs mt-0.5">{automationResult.productName}</p>
                 )}
               </div>
               <button
                 onClick={() => setAutomationResult(null)}
-                className="text-white/40 hover:text-white transition-colors"
+                className="text-ink/40 hover:text-ink transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <p className="text-white/60 text-sm font-sans mb-4">{automationResult.message}</p>
+            <p className="text-ink/70 text-sm font-sans mb-4">{automationResult.message}</p>
 
             {automationResult.labelUrl && (
-              <div className="mb-4 p-3 bg-green-500/10 border border-green-500/30">
-                <p className="text-green-400 text-xs font-sans font-medium mb-1">🏷️ Etiqueta gerada pelo Melhor Envio:</p>
+              <div className="mb-4 p-3 bg-green-50 border border-green-200">
+                <p className="text-green-700 text-xs font-sans font-medium mb-1">Etiqueta gerada pelo Melhor Envio:</p>
                 <a
                   href={automationResult.labelUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gold text-xs font-mono underline break-all"
+                  className="text-gold-dark text-xs font-mono underline break-all"
                 >
                   {automationResult.labelUrl}
                 </a>
-                <p className="text-white/30 text-xs mt-1">
+                <p className="text-ink-muted text-xs mt-1">
                   Link também enviado para a atendente via WhatsApp.
                 </p>
               </div>
@@ -286,12 +281,12 @@ export function AdminOrderActions({ order }: Props) {
 
             {automationResult.screenshot && (
               <div>
-                <p className="text-white/30 text-xs font-sans mb-2">Screenshot do resultado no fornecedor:</p>
+                <p className="text-ink-muted text-xs font-sans mb-2">Screenshot do resultado no fornecedor:</p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`data:image/png;base64,${automationResult.screenshot}`}
                   alt="Screenshot do fornecedor"
-                  className="w-full border border-dark-300"
+                  className="w-full border border-cream-200"
                 />
               </div>
             )}

@@ -12,40 +12,40 @@ export default async function AdminOrdersPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <p className="text-gold text-xs tracking-[0.3em] uppercase font-sans mb-2">Gerenciar</p>
-        <h1 className="font-serif text-3xl text-white">Pedidos</h1>
-        <p className="text-white/40 text-sm font-sans mt-2">{orders.length} pedidos no total</p>
+        <p className="text-gold-dark text-xs tracking-[0.3em] uppercase font-sans mb-2">Gerenciar</p>
+        <h1 className="font-serif text-3xl text-ink">Pedidos</h1>
+        <p className="text-ink-muted text-sm font-sans mt-2">{orders.length} pedidos no total</p>
       </div>
 
-      <div className="bg-dark-100 border border-dark-300 overflow-x-auto">
+      <div className="bg-white border border-cream-200 overflow-x-auto shadow-sm">
         <table className="w-full">
-          <thead>
-            <tr className="border-b border-dark-300">
+          <thead className="bg-cream-50">
+            <tr className="border-b border-cream-200">
               {["ID", "Cliente", "Itens", "Total", "Pagamento", "Status", "Data", "Dropshipping", "Ações"].map((h) => (
-                <th key={h} className="text-left px-5 py-4 text-white/40 text-[10px] uppercase tracking-[0.2em] font-sans font-medium">
+                <th key={h} className="text-left px-5 py-4 text-ink-muted text-[10px] uppercase tracking-[0.2em] font-sans font-medium">
                   {h}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-dark-300">
+          <tbody className="divide-y divide-cream-200">
             {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-dark-200/50 transition-colors">
+              <tr key={order.id} className="hover:bg-cream-50/50 transition-colors">
                 <td className="px-5 py-4">
-                  <span className="text-gold font-mono text-xs">{order.id.slice(0, 8)}...</span>
+                  <span className="text-gold-dark font-mono text-xs">{order.id.slice(0, 8)}...</span>
                 </td>
                 <td className="px-5 py-4">
-                  <p className="text-white text-sm font-sans">{order.shippingName}</p>
-                  <p className="text-white/30 text-xs font-sans">{order.shippingEmail}</p>
+                  <p className="text-ink text-sm font-sans">{order.shippingName}</p>
+                  <p className="text-ink-muted text-xs font-sans">{order.shippingEmail}</p>
                 </td>
                 <td className="px-5 py-4">
-                  <span className="text-white/60 text-sm font-sans">{order.items.length}</span>
+                  <span className="text-ink/70 text-sm font-sans">{order.items.length}</span>
                 </td>
                 <td className="px-5 py-4">
-                  <span className="text-gold font-semibold text-sm">{formatPrice(order.total)}</span>
+                  <span className="text-ink font-semibold text-sm">{formatPrice(order.total)}</span>
                 </td>
                 <td className="px-5 py-4">
-                  <span className={cn("text-xs px-2 py-1 font-sans", order.paymentStatus === "PAID" ? "text-green-400 bg-green-400/10" : "text-yellow-400 bg-yellow-400/10")}>
+                  <span className={cn("text-xs px-2 py-1 font-sans", order.paymentStatus === "PAID" ? "text-green-700 bg-green-100" : "text-yellow-700 bg-yellow-100")}>
                     {order.paymentStatus === "PAID" ? "Pago" : "Pendente"}
                   </span>
                 </td>
@@ -55,17 +55,17 @@ export default async function AdminOrdersPage() {
                   </span>
                 </td>
                 <td className="px-5 py-4">
-                  <span className="text-white/40 text-xs font-sans">{formatDate(order.createdAt)}</span>
+                  <span className="text-ink-muted text-xs font-sans">{formatDate(order.createdAt)}</span>
                 </td>
                 <td className="px-5 py-4">
                   <div>
                     {order.dropshippingOrderId ? (
-                      <span className="text-green-400 text-xs font-mono">{order.dropshippingOrderId.slice(0, 10)}</span>
+                      <span className="text-green-700 text-xs font-mono">{order.dropshippingOrderId.slice(0, 10)}</span>
                     ) : (
-                      <span className="text-white/20 text-xs">Não enviado</span>
+                      <span className="text-ink/30 text-xs">Não enviado</span>
                     )}
                     {order.trackingCode && (
-                      <p className="text-gold text-xs font-mono mt-0.5">{order.trackingCode}</p>
+                      <p className="text-gold-dark text-xs font-mono mt-0.5">{order.trackingCode}</p>
                     )}
                   </div>
                 </td>
@@ -83,7 +83,7 @@ export default async function AdminOrdersPage() {
           </tbody>
         </table>
         {orders.length === 0 && (
-          <div className="p-16 text-center text-white/30 text-sm font-sans">
+          <div className="p-16 text-center text-ink/30 text-sm font-sans">
             Nenhum pedido ainda
           </div>
         )}
