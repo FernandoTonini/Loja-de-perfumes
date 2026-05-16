@@ -70,7 +70,17 @@ export function HeroSection() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center">
-        <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center w-full py-24">
+        <div className="grid lg:grid-cols-2 gap-8 xl:gap-20 items-center w-full py-16 lg:py-24">
+
+          {/* Mobile hero image — visible only below lg */}
+          <div className={`col-span-full lg:hidden relative w-full aspect-[4/3] overflow-hidden transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"} ${transitioning ? "opacity-0" : "opacity-100"}`}>
+            <img
+              src={slide.image}
+              alt={slide.titleHighlight}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(250,250,248,0.5) 0%, transparent 60%)" }} />
+          </div>
 
           {/* Left — text content */}
           <div className={`transition-all duration-500 ${loaded ? "opacity-100" : "opacity-0"} ${transitioning ? "opacity-0 translate-x-4" : "opacity-100 translate-x-0"}`}>
@@ -83,7 +93,7 @@ export function HeroSection() {
             </div>
 
             {/* Heading */}
-            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-light text-ink leading-[1.08] mb-6">
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-7xl font-light text-ink leading-[1.08] mb-6">
               {slide.title}
               <br />
               <span className="gold-text italic">{slide.titleHighlight}</span>
@@ -112,7 +122,7 @@ export function HeroSection() {
             </div>
 
             {/* Stats */}
-            <div className="flex gap-10 mt-16 pt-8 border-t border-cream-200">
+            <div className="flex gap-6 lg:gap-10 mt-10 lg:mt-16 pt-8 border-t border-cream-200">
               {[
                 { value: "500+", label: "Fragrâncias" },
                 { value: "50+", label: "Marcas Importadas" },
