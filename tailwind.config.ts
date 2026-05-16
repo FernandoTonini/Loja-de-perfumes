@@ -20,18 +20,22 @@ const config: Config = {
           800: "#5C4713",
           900: "#3D2F0D",
         },
-        dark: {
-          DEFAULT: "#0A0A0A",
-          100: "#1A1A1A",
-          200: "#222222",
-          300: "#2A2A2A",
-          400: "#333333",
-          500: "#444444",
+        cream: {
+          DEFAULT: "#FAFAF8",
+          50: "#F4F1EB",
+          100: "#EDE8DF",
+          200: "#DED6CB",
+          300: "#CABFB3",
+        },
+        ink: {
+          DEFAULT: "#1C1814",
+          light: "#4A4540",
+          muted: "#7A7268",
         },
       },
       fontFamily: {
-        serif: ["var(--font-cormorant)", "Georgia", "serif"],
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        serif: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: ["var(--font-dm-sans)", "system-ui", "sans-serif"],
       },
       animation: {
         shimmer: "shimmer 2s linear infinite",
@@ -59,7 +63,7 @@ const config: Config = {
       },
       backgroundImage: {
         "gold-gradient": "linear-gradient(135deg, #C9A84C 0%, #E5C76B 50%, #9E7F2A 100%)",
-        "dark-gradient": "linear-gradient(180deg, #0A0A0A 0%, #111111 100%)",
+        "cream-gradient": "linear-gradient(180deg, #FAFAF8 0%, #F4F1EB 100%)",
       },
     },
   },

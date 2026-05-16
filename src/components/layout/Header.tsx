@@ -33,23 +33,23 @@ export function Header() {
   return (
     <>
       {/* Announcement bar */}
-      <div className="bg-gold text-dark text-center py-2 text-xs font-semibold tracking-[0.15em] uppercase">
-        Frete grátis para compras acima de R$ 500 &nbsp;|&nbsp; Perfumes 100% Originais &nbsp;|&nbsp; Entrega para todo o Brasil
+      <div className="bg-ink text-cream text-center py-2 text-[11px] font-sans font-medium tracking-[0.15em] uppercase">
+        Frete grátis acima de R$ 500 &nbsp;·&nbsp; Perfumes 100% Originais &nbsp;·&nbsp; Entrega para todo o Brasil
       </div>
 
       <header
         className={cn(
           "sticky top-0 z-50 transition-all duration-300",
           scrolled
-            ? "bg-dark/95 backdrop-blur-md border-b border-dark-300/50 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
-            : "bg-dark border-b border-dark-300/30"
+            ? "bg-cream/95 backdrop-blur-md border-b border-cream-200 shadow-[0_2px_20px_rgba(28,24,20,0.08)]"
+            : "bg-cream border-b border-cream-200"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Mobile menu button */}
             <button
-              className="md:hidden text-white/70 hover:text-gold transition-colors"
+              className="md:hidden text-ink/50 hover:text-gold-dark transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -58,10 +58,10 @@ export function Header() {
             {/* Logo */}
             <Link href="/" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
               <div className="text-center">
-                <span className="font-serif text-2xl md:text-3xl font-light tracking-[0.2em] text-white">
+                <span className="font-serif text-2xl md:text-3xl font-normal tracking-[0.2em] text-ink">
                   MAISON
                 </span>
-                <span className="block text-[10px] tracking-[0.5em] uppercase text-gold font-sans font-medium -mt-1">
+                <span className="block text-[10px] tracking-[0.5em] uppercase text-gold-dark font-sans font-medium -mt-0.5">
                   Parfums
                 </span>
               </div>
@@ -73,7 +73,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-white/70 hover:text-gold transition-colors text-sm tracking-wide font-sans"
+                  className="text-ink/60 hover:text-gold-dark transition-colors text-sm tracking-wide font-sans"
                 >
                   {link.label}
                 </Link>
@@ -82,7 +82,7 @@ export function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-4">
-              <Link href="/buscar" className="hidden sm:block text-white/70 hover:text-gold transition-colors">
+              <Link href="/buscar" className="hidden sm:block text-ink/50 hover:text-gold-dark transition-colors">
                 <Search size={20} />
               </Link>
 
@@ -90,25 +90,25 @@ export function Header() {
               <div className="relative hidden sm:block">
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="text-white/70 hover:text-gold transition-colors flex items-center gap-1"
+                  className="text-ink/50 hover:text-gold-dark transition-colors flex items-center gap-1"
                 >
                   <User size={20} />
                   {session && <ChevronDown size={12} />}
                 </button>
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-dark-100 border border-dark-300 shadow-xl z-50">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-cream-200 shadow-[0_8px_30px_rgba(28,24,20,0.12)] z-50">
                     {session ? (
                       <>
                         <Link
                           href="/conta"
-                          className="block px-4 py-3 text-sm text-white/80 hover:text-gold hover:bg-dark-200 transition-colors"
+                          className="block px-4 py-3 text-sm text-ink/70 hover:text-gold-dark hover:bg-cream-50 transition-colors"
                           onClick={() => setUserMenuOpen(false)}
                         >
                           Minha Conta
                         </Link>
                         <Link
                           href="/conta/pedidos"
-                          className="block px-4 py-3 text-sm text-white/80 hover:text-gold hover:bg-dark-200 transition-colors"
+                          className="block px-4 py-3 text-sm text-ink/70 hover:text-gold-dark hover:bg-cream-50 transition-colors"
                           onClick={() => setUserMenuOpen(false)}
                         >
                           Meus Pedidos
@@ -116,7 +116,7 @@ export function Header() {
                         {session.user.role === "ADMIN" && (
                           <Link
                             href="/admin"
-                            className="block px-4 py-3 text-sm text-gold hover:bg-dark-200 transition-colors border-t border-dark-300"
+                            className="block px-4 py-3 text-sm text-gold-dark hover:bg-cream-50 transition-colors border-t border-cream-200"
                             onClick={() => setUserMenuOpen(false)}
                           >
                             Painel Admin
@@ -124,7 +124,7 @@ export function Header() {
                         )}
                         <button
                           onClick={() => { signOut(); setUserMenuOpen(false); }}
-                          className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-dark-200 transition-colors border-t border-dark-300"
+                          className="w-full text-left px-4 py-3 text-sm text-red-500 hover:bg-cream-50 transition-colors border-t border-cream-200"
                         >
                           Sair
                         </button>
@@ -133,14 +133,14 @@ export function Header() {
                       <>
                         <Link
                           href="/login"
-                          className="block px-4 py-3 text-sm text-white/80 hover:text-gold hover:bg-dark-200 transition-colors"
+                          className="block px-4 py-3 text-sm text-ink/70 hover:text-gold-dark hover:bg-cream-50 transition-colors"
                           onClick={() => setUserMenuOpen(false)}
                         >
                           Entrar
                         </Link>
                         <Link
                           href="/cadastro"
-                          className="block px-4 py-3 text-sm text-white/80 hover:text-gold hover:bg-dark-200 transition-colors"
+                          className="block px-4 py-3 text-sm text-ink/70 hover:text-gold-dark hover:bg-cream-50 transition-colors"
                           onClick={() => setUserMenuOpen(false)}
                         >
                           Cadastrar
@@ -154,11 +154,11 @@ export function Header() {
               {/* Cart */}
               <button
                 onClick={toggleCart}
-                className="relative text-white/70 hover:text-gold transition-colors"
+                className="relative text-ink/50 hover:text-gold-dark transition-colors"
               >
                 <ShoppingBag size={22} />
                 {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-gold text-dark text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-gold text-cream text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                     {totalItems > 9 ? "9+" : totalItems}
                   </span>
                 )}
@@ -169,13 +169,13 @@ export function Header() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden bg-dark-100 border-t border-dark-300">
+          <div className="md:hidden bg-white border-t border-cream-200 shadow-md">
             <nav className="px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="py-3 px-2 text-white/80 hover:text-gold border-b border-dark-300/50 font-sans text-sm tracking-wide"
+                  className="py-3 px-2 text-ink/70 hover:text-gold-dark border-b border-cream-100 font-sans text-sm tracking-wide"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}
@@ -184,14 +184,14 @@ export function Header() {
               <div className="pt-2 flex flex-col gap-1">
                 {session ? (
                   <>
-                    <Link href="/conta" className="py-3 px-2 text-white/80 hover:text-gold font-sans text-sm" onClick={() => setMobileOpen(false)}>Minha Conta</Link>
-                    <Link href="/conta/pedidos" className="py-3 px-2 text-white/80 hover:text-gold font-sans text-sm" onClick={() => setMobileOpen(false)}>Meus Pedidos</Link>
-                    <button onClick={() => signOut()} className="py-3 px-2 text-left text-red-400 font-sans text-sm">Sair</button>
+                    <Link href="/conta" className="py-3 px-2 text-ink/70 hover:text-gold-dark font-sans text-sm" onClick={() => setMobileOpen(false)}>Minha Conta</Link>
+                    <Link href="/conta/pedidos" className="py-3 px-2 text-ink/70 hover:text-gold-dark font-sans text-sm" onClick={() => setMobileOpen(false)}>Meus Pedidos</Link>
+                    <button onClick={() => signOut()} className="py-3 px-2 text-left text-red-500 font-sans text-sm">Sair</button>
                   </>
                 ) : (
                   <>
-                    <Link href="/login" className="py-3 px-2 text-white/80 hover:text-gold font-sans text-sm" onClick={() => setMobileOpen(false)}>Entrar</Link>
-                    <Link href="/cadastro" className="py-3 px-2 text-white/80 hover:text-gold font-sans text-sm" onClick={() => setMobileOpen(false)}>Cadastrar</Link>
+                    <Link href="/login" className="py-3 px-2 text-ink/70 hover:text-gold-dark font-sans text-sm" onClick={() => setMobileOpen(false)}>Entrar</Link>
+                    <Link href="/cadastro" className="py-3 px-2 text-ink/70 hover:text-gold-dark font-sans text-sm" onClick={() => setMobileOpen(false)}>Cadastrar</Link>
                   </>
                 )}
               </div>

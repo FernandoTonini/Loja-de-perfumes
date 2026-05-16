@@ -60,16 +60,16 @@ export default async function ProductPage({ params }: { params: { slug: string }
   }));
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-cream">
       <ProductDetailClient product={product} />
 
       {/* Related products */}
       {related.length > 0 && (
-        <section className="py-20 border-t border-dark-300">
+        <section className="py-20 border-t border-cream-200 bg-cream-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <p className="section-subtitle mb-3">Da Mesma Categoria</p>
-              <h2 className="font-serif text-3xl text-white">
+              <h2 className="font-serif text-3xl text-ink font-light">
                 Você Também Pode <span className="gold-text italic">Gostar</span>
               </h2>
             </div>

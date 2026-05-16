@@ -24,13 +24,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className="min-h-screen bg-dark text-white antialiased">
+      <body className="min-h-screen bg-cream text-ink antialiased">
         <SessionProvider session={session}>
           <Header />
           <CartDrawer />
           <main className="min-h-screen">{children}</main>
           <Footer />
-          <Toaster position="top-right" />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: "#FFFFFF",
+                color: "#1C1814",
+                border: "1px solid #DED6CB",
+                fontFamily: "var(--font-dm-sans)",
+              },
+            }}
+          />
         </SessionProvider>
       </body>
     </html>

@@ -3,9 +3,9 @@ import { Instagram, Mail, Phone, MapPin, Shield, Truck, RotateCcw, Star } from "
 
 export function Footer() {
   return (
-    <footer className="bg-dark-100 border-t border-dark-300">
+    <footer className="bg-cream-50 border-t border-cream-200">
       {/* Trust badges */}
-      <div className="border-b border-dark-300">
+      <div className="border-b border-cream-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -16,8 +16,8 @@ export function Footer() {
             ].map((item) => (
               <div key={item.title} className="flex flex-col items-center text-center gap-3">
                 <div className="text-gold">{item.icon}</div>
-                <h4 className="font-sans font-semibold text-white text-sm">{item.title}</h4>
-                <p className="text-white/40 text-xs leading-relaxed">{item.desc}</p>
+                <h4 className="font-sans font-semibold text-ink text-sm">{item.title}</h4>
+                <p className="text-ink-muted text-xs leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -30,18 +30,18 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="mb-4">
-              <span className="font-serif text-2xl text-white tracking-[0.2em]">MAISON</span>
-              <span className="block text-[10px] tracking-[0.5em] uppercase text-gold font-sans font-medium">
+              <span className="font-serif text-2xl text-ink tracking-[0.2em]">MAISON</span>
+              <span className="block text-[10px] tracking-[0.5em] uppercase text-gold-dark font-sans font-medium">
                 Parfums
               </span>
             </div>
-            <p className="text-white/40 text-sm leading-relaxed mb-6">
+            <p className="text-ink-muted text-sm leading-relaxed mb-6">
               Trazemos as mais exclusivas fragrâncias do mundo diretamente para você.
               Elegância e sofisticação em cada frasco.
             </p>
             <div className="flex gap-4">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                className="text-white/40 hover:text-gold transition-colors">
+                className="text-ink/30 hover:text-gold-dark transition-colors">
                 <Instagram size={20} />
               </a>
             </div>
@@ -49,7 +49,7 @@ export function Footer() {
 
           {/* Links */}
           <div>
-            <h5 className="text-xs tracking-[0.3em] uppercase text-gold font-sans font-medium mb-6">Categorias</h5>
+            <h5 className="text-xs tracking-[0.3em] uppercase text-gold-dark font-sans font-medium mb-6">Categorias</h5>
             <ul className="space-y-3">
               {[
                 { label: "Masculino", href: "/produtos?categoria=masculino" },
@@ -59,7 +59,7 @@ export function Footer() {
                 { label: "Árabes", href: "/produtos?categoria=arabes" },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-white/50 hover:text-gold transition-colors text-sm font-sans">
+                  <Link href={l.href} className="text-ink-muted hover:text-gold-dark transition-colors text-sm font-sans">
                     {l.label}
                   </Link>
                 </li>
@@ -68,7 +68,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h5 className="text-xs tracking-[0.3em] uppercase text-gold font-sans font-medium mb-6">Informações</h5>
+            <h5 className="text-xs tracking-[0.3em] uppercase text-gold-dark font-sans font-medium mb-6">Informações</h5>
             <ul className="space-y-3">
               {[
                 { label: "Sobre Nós", href: "/sobre" },
@@ -78,7 +78,7 @@ export function Footer() {
                 { label: "FAQ", href: "/faq" },
               ].map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-white/50 hover:text-gold transition-colors text-sm font-sans">
+                  <Link href={l.href} className="text-ink-muted hover:text-gold-dark transition-colors text-sm font-sans">
                     {l.label}
                   </Link>
                 </li>
@@ -88,23 +88,23 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h5 className="text-xs tracking-[0.3em] uppercase text-gold font-sans font-medium mb-6">Contato</h5>
+            <h5 className="text-xs tracking-[0.3em] uppercase text-gold-dark font-sans font-medium mb-6">Contato</h5>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-white/50 text-sm">
+              <li className="flex items-start gap-3 text-ink-muted text-sm">
                 <Mail size={16} className="text-gold mt-0.5 flex-shrink-0" />
-                <a href="mailto:contato@maisonparfums.com.br" className="hover:text-gold transition-colors">
+                <a href="mailto:contato@maisonparfums.com.br" className="hover:text-gold-dark transition-colors">
                   contato@maisonparfums.com.br
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-white/50 text-sm">
+              <li className="flex items-start gap-3 text-ink-muted text-sm">
                 <Phone size={16} className="text-gold mt-0.5 flex-shrink-0" />
-                <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
-                  (11) 99999-9999
+                <a href="https://wa.me/5562992903003" target="_blank" rel="noopener noreferrer" className="hover:text-gold-dark transition-colors">
+                  (62) 99290-3003
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-white/50 text-sm">
+              <li className="flex items-start gap-3 text-ink-muted text-sm">
                 <MapPin size={16} className="text-gold mt-0.5 flex-shrink-0" />
-                <span>São Paulo, SP — Brasil</span>
+                <span>Brasil</span>
               </li>
             </ul>
           </div>
@@ -112,14 +112,14 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-dark-300">
+      <div className="border-t border-cream-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-white/30 text-xs font-sans">
+          <p className="text-ink/30 text-xs font-sans">
             © {new Date().getFullYear()} Maison Parfums. Todos os direitos reservados.
           </p>
-          <div className="flex items-center gap-2">
-            <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" alt="Pagamentos" className="h-6 opacity-30" />
-          </div>
+          <p className="text-ink/30 text-xs font-sans">
+            Pagamentos seguros via Stripe
+          </p>
         </div>
       </div>
     </footer>

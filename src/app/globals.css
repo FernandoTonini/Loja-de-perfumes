@@ -1,19 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
-  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
   --gold: #C9A84C;
   --gold-light: #E5C76B;
   --gold-dark: #9E7F2A;
-  --bg: #0A0A0A;
-  --surface: #111111;
-  --card: #1A1A1A;
-  --border: #2A2A2A;
+  --bg: #FAFAF8;
+  --surface: #F4F1EB;
+  --card: #FFFFFF;
+  --border: #DED6CB;
+  --ink: #1C1814;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,24 +25,24 @@ html {
 
 body {
   background-color: var(--bg);
-  color: #F5F5F5;
-  font-family: var(--font-inter);
+  color: var(--ink);
+  font-family: var(--font-dm-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-cormorant);
+  font-family: var(--font-playfair);
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #111; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-track { background: #F4F1EB; }
+::-webkit-scrollbar-thumb { background: #DED6CB; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
 
 ::selection {
   background: var(--gold);
-  color: #0A0A0A;
+  color: #FAFAF8;
 }
 
 @layer components {
@@ -51,33 +52,33 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .gold-border {
-    @apply border border-gold/30;
+    @apply border border-gold/40;
   }
 
   .glass-card {
-    @apply bg-white/5 backdrop-blur-sm border border-white/10;
+    @apply bg-ink/5 backdrop-blur-sm border border-ink/10;
   }
 
   .btn-gold {
-    @apply bg-gold hover:bg-gold-light text-dark font-semibold transition-all duration-300
-           hover:shadow-[0_0_30px_rgba(201,168,76,0.4)] active:scale-[0.98] rounded-none;
+    @apply bg-gold hover:bg-gold-light text-cream font-semibold transition-all duration-300
+           hover:shadow-[0_4px_20px_rgba(201,168,76,0.35)] active:scale-[0.98] rounded-none;
   }
 
   .btn-outline-gold {
-    @apply border border-gold text-gold hover:bg-gold hover:text-dark font-semibold
+    @apply border border-gold text-gold-dark hover:bg-gold hover:text-cream font-semibold
            transition-all duration-300 rounded-none;
   }
 
   .section-title {
-    @apply font-serif text-4xl md:text-5xl text-white font-light tracking-wide;
+    @apply font-serif text-4xl md:text-5xl text-ink font-light tracking-wide;
   }
 
   .section-subtitle {
-    @apply text-sm tracking-[0.3em] uppercase text-gold font-sans font-medium;
+    @apply text-sm tracking-[0.3em] uppercase text-gold-dark font-sans font-medium;
   }
 
   .product-card-hover {
-    @apply transition-all duration-500 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] hover:-translate-y-1;
+    @apply transition-all duration-500 hover:shadow-[0_8px_40px_rgba(28,24,20,0.12)] hover:-translate-y-1;
   }
 }
 
@@ -85,7 +86,7 @@ h1, h2, h3, h4, h5, h6 {
   .text-balance { text-wrap: balance; }
 
   .gold-shimmer {
-    background: linear-gradient(90deg, #C9A84C 25%, #E5C76B 50%, #C9A84C 75%);
+    background: linear-gradient(90deg, #9E7F2A 25%, #C9A84C 50%, #9E7F2A 75%);
     background-size: 200% 100%;
     animation: shimmer 2s linear infinite;
     -webkit-background-clip: text;

@@ -38,9 +38,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        toast.error("E-mail ou senha incorretos.", {
-          style: { background: "#1a1a1a", color: "#fff", border: "1px solid #2a2a2a" },
-        });
+        toast.error("E-mail ou senha incorretos.");
       } else {
         router.push("/conta");
         router.refresh();
@@ -51,55 +49,55 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-cream-50 flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-10">
           <Link href="/">
-            <span className="font-serif text-3xl text-white tracking-[0.2em]">MAISON</span>
-            <span className="block text-[10px] tracking-[0.5em] uppercase text-gold font-sans">Parfums</span>
+            <span className="font-serif text-3xl text-ink tracking-[0.2em]">MAISON</span>
+            <span className="block text-[10px] tracking-[0.5em] uppercase text-gold-dark font-sans">Parfums</span>
           </Link>
         </div>
 
-        <div className="bg-dark-100 border border-dark-300 p-8">
-          <h1 className="font-serif text-2xl text-white mb-2">Entrar na sua conta</h1>
-          <p className="text-white/40 text-sm font-sans mb-8">
+        <div className="bg-white border border-cream-200 p-8 shadow-sm">
+          <h1 className="font-serif text-2xl text-ink mb-2">Entrar na sua conta</h1>
+          <p className="text-ink-muted text-sm font-sans mb-8">
             Não tem conta?{" "}
-            <Link href="/cadastro" className="text-gold hover:text-gold-light transition-colors">
+            <Link href="/cadastro" className="text-gold-dark hover:text-gold transition-colors">
               Cadastre-se grátis
             </Link>
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div>
-              <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">E-mail</label>
+              <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">E-mail</label>
               <input
                 {...register("email")}
                 type="email"
                 placeholder="seu@email.com"
-                className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm placeholder-white/20 transition-colors"
+                className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm placeholder-ink/30 transition-colors"
               />
-              {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">Senha</label>
+              <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">Senha</label>
               <div className="relative">
                 <input
                   {...register("password")}
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm placeholder-white/20 transition-colors pr-12"
+                  className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm placeholder-ink/30 transition-colors pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-gold transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/30 hover:text-gold-dark transition-colors"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
-              {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password.message}</p>}
+              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
             </div>
 
             <button

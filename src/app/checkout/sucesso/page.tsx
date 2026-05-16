@@ -9,7 +9,7 @@ export default function SuccessPage({
   const orderId = searchParams.orderId || searchParams.session_id;
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center py-20">
+    <div className="min-h-screen bg-cream-50 flex items-center justify-center py-20">
       <div className="max-w-lg w-full mx-auto px-4 text-center">
         {/* Icon */}
         <div className="relative mb-8 inline-block">
@@ -20,20 +20,20 @@ export default function SuccessPage({
         </div>
 
         <p className="section-subtitle mb-4">Pedido Confirmado</p>
-        <h1 className="font-serif text-4xl text-white mb-4">
+        <h1 className="font-serif text-4xl text-ink mb-4">
           Obrigado pela <span className="gold-text italic">sua compra!</span>
         </h1>
         <div className="divider-gold" />
 
-        <p className="text-white/60 font-sans text-sm leading-relaxed mt-6 mb-8">
+        <p className="text-ink-muted font-sans text-sm leading-relaxed mt-6 mb-8">
           Seu pedido foi recebido com sucesso e já está sendo processado.
           Você receberá um e-mail com os detalhes e o código de rastreamento assim que o pedido for enviado.
         </p>
 
         {orderId && (
-          <div className="bg-dark-100 border border-gold/20 p-4 mb-8">
-            <p className="text-white/40 text-xs uppercase tracking-wide font-sans mb-1">Número do Pedido</p>
-            <p className="text-gold font-mono text-sm">{orderId}</p>
+          <div className="bg-white border border-gold/20 p-4 mb-8 shadow-sm">
+            <p className="text-ink-muted text-xs uppercase tracking-wide font-sans mb-1">Número do Pedido</p>
+            <p className="text-gold-dark font-mono text-sm">{orderId}</p>
           </div>
         )}
 

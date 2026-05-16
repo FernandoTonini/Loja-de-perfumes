@@ -39,29 +39,27 @@ export default function CadastroPage() {
       router.push("/conta");
     } catch (error: unknown) {
       const msg = axios.isAxiosError(error) ? error.response?.data?.error : "Erro ao criar conta";
-      toast.error(msg || "Erro ao criar conta", {
-        style: { background: "#1a1a1a", color: "#fff", border: "1px solid #2a2a2a" },
-      });
+      toast.error(msg || "Erro ao criar conta");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-cream-50 flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <Link href="/">
-            <span className="font-serif text-3xl text-white tracking-[0.2em]">MAISON</span>
-            <span className="block text-[10px] tracking-[0.5em] uppercase text-gold font-sans">Parfums</span>
+            <span className="font-serif text-3xl text-ink tracking-[0.2em]">MAISON</span>
+            <span className="block text-[10px] tracking-[0.5em] uppercase text-gold-dark font-sans">Parfums</span>
           </Link>
         </div>
 
-        <div className="bg-dark-100 border border-dark-300 p-8">
-          <h1 className="font-serif text-2xl text-white mb-2">Criar conta</h1>
-          <p className="text-white/40 text-sm font-sans mb-8">
+        <div className="bg-white border border-cream-200 p-8 shadow-sm">
+          <h1 className="font-serif text-2xl text-ink mb-2">Criar conta</h1>
+          <p className="text-ink-muted text-sm font-sans mb-8">
             Já tem conta?{" "}
-            <Link href="/login" className="text-gold hover:text-gold-light transition-colors">
+            <Link href="/login" className="text-gold-dark hover:text-gold transition-colors">
               Entrar agora
             </Link>
           </p>
@@ -74,14 +72,14 @@ export default function CadastroPage() {
               { name: "confirmPassword" as const, label: "Confirmar Senha", placeholder: "Repita a senha", type: "password" },
             ].map((field) => (
               <div key={field.name}>
-                <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">{field.label}</label>
+                <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">{field.label}</label>
                 <input
                   {...register(field.name)}
                   type={field.type || "text"}
                   placeholder={field.placeholder}
-                  className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm placeholder-white/20 transition-colors"
+                  className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm placeholder-ink/30 transition-colors"
                 />
-                {errors[field.name] && <p className="text-red-400 text-xs mt-1">{errors[field.name]?.message}</p>}
+                {errors[field.name] && <p className="text-red-500 text-xs mt-1">{errors[field.name]?.message}</p>}
               </div>
             ))}
 

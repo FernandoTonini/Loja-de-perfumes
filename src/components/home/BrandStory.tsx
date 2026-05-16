@@ -3,35 +3,35 @@ import { ArrowRight } from "lucide-react";
 
 export function BrandStory() {
   return (
-    <section className="py-24 bg-dark-100">
+    <section className="py-24 bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Image collage */}
-          <div className="relative h-[600px] hidden lg:block">
-            <div className="absolute top-0 left-0 w-64 h-80 overflow-hidden">
+          <div className="relative h-[580px] hidden lg:block">
+            <div className="absolute top-0 left-0 w-64 h-80 overflow-hidden shadow-md">
               <img
-                src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&q=80"
+                src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&q=85"
                 alt="Perfume"
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute top-20 right-0 w-56 h-72 overflow-hidden border-4 border-dark">
+            <div className="absolute top-20 right-0 w-56 h-72 overflow-hidden border-4 border-cream shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?w=400&q=80"
+                src="https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?w=400&q=85"
                 alt="Perfume"
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute bottom-0 left-20 w-72 h-64 overflow-hidden">
+            <div className="absolute bottom-0 left-16 w-72 h-60 overflow-hidden shadow-sm">
               <img
-                src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&q=80"
+                src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&q=85"
                 alt="Perfume"
-                className="w-full h-full object-cover opacity-70"
+                className="w-full h-full object-cover"
               />
             </div>
-            {/* Gold accent */}
-            <div className="absolute bottom-10 right-10 w-40 h-40 border border-gold/30 -z-0" />
-            <div className="absolute top-10 left-[30%] text-gold/20 font-serif text-[120px] font-light leading-none select-none">M</div>
+            {/* Decorative gold frame */}
+            <div className="absolute bottom-12 right-8 w-40 h-40 border border-gold/30 -z-0 pointer-events-none" />
+            <div className="absolute top-10 left-[30%] text-gold/10 font-serif text-[140px] font-light leading-none select-none pointer-events-none">M</div>
           </div>
 
           {/* Content */}
@@ -43,7 +43,7 @@ export function BrandStory() {
             </h2>
             <div className="h-px w-16 bg-gold mb-8" />
 
-            <div className="space-y-4 text-white/60 font-sans text-sm leading-relaxed mb-8">
+            <div className="space-y-4 text-ink-muted font-sans text-sm leading-relaxed mb-8">
               <p>
                 A Maison Parfums nasceu da paixão profunda pelo mundo das fragrâncias.
                 Acreditamos que um perfume vai muito além de um simples aroma — é uma

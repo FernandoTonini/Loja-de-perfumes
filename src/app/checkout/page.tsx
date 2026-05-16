@@ -80,9 +80,7 @@ export default function CheckoutPage() {
         router.push(`/checkout/sucesso?orderId=${response.data.orderId}`);
       }
     } catch (error) {
-      toast.error("Erro ao processar pedido. Tente novamente.", {
-        style: { background: "#1a1a1a", color: "#fff", border: "1px solid #2a2a2a" },
-      });
+      toast.error("Erro ao processar pedido. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -96,21 +94,21 @@ export default function CheckoutPage() {
     className?: string;
   }) => (
     <div className={className}>
-      <label className="block text-xs tracking-wide text-white/50 uppercase font-sans mb-2">{label}</label>
+      <label className="block text-xs tracking-wide text-ink-muted uppercase font-sans mb-2">{label}</label>
       <input
         {...register(name)}
         type={type}
         placeholder={placeholder}
-        className="w-full bg-dark-200 border border-dark-300 focus:border-gold/50 outline-none px-4 py-3 text-white text-sm font-sans placeholder-white/20 transition-colors"
+        className="w-full bg-cream-50 border border-cream-200 focus:border-gold/60 outline-none px-4 py-3 text-ink text-sm font-sans placeholder-ink/30 transition-colors"
       />
       {errors[name] && (
-        <p className="text-red-400 text-xs mt-1">{errors[name]?.message}</p>
+        <p className="text-red-500 text-xs mt-1">{errors[name]?.message}</p>
       )}
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-dark py-12">
+    <div className="min-h-screen bg-cream py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -126,8 +124,8 @@ export default function CheckoutPage() {
             {/* Form */}
             <div className="lg:col-span-2 space-y-8">
               {/* Personal data */}
-              <div className="bg-dark-100 border border-dark-300 p-6">
-                <h2 className="font-serif text-xl text-white mb-6">
+              <div className="bg-white border border-cream-200 p-6 shadow-sm">
+                <h2 className="font-serif text-xl text-ink mb-6">
                   Dados Pessoais
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -138,8 +136,8 @@ export default function CheckoutPage() {
               </div>
 
               {/* Address */}
-              <div className="bg-dark-100 border border-dark-300 p-6">
-                <h2 className="font-serif text-xl text-white mb-6">
+              <div className="bg-white border border-cream-200 p-6 shadow-sm">
+                <h2 className="font-serif text-xl text-ink mb-6">
                   Endereço de Entrega
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -154,26 +152,30 @@ export default function CheckoutPage() {
               </div>
 
               {/* Payment method */}
-              <div className="bg-dark-100 border border-dark-300 p-6">
-                <h2 className="font-serif text-xl text-white mb-6">
+              <div className="bg-white border border-cream-200 p-6 shadow-sm">
+                <h2 className="font-serif text-xl text-ink mb-6">
                   Forma de Pagamento
                 </h2>
                 <div className="grid grid-cols-2 gap-4">
-                  <label className={`flex items-center gap-4 p-4 cursor-pointer border transition-all ${paymentMethod === "stripe" ? "border-gold bg-gold/5" : "border-dark-300 hover:border-dark-400"}`}>
+                  <label className={`flex items-center gap-4 p-4 cursor-pointer border transition-all ${
+                    paymentMethod === "stripe" ? "border-gold bg-gold/5" : "border-cream-200 hover:border-cream-300"
+                  }`}>
                     <input {...register("paymentMethod")} type="radio" value="stripe" className="accent-gold" />
-                    <CreditCard size={20} className={paymentMethod === "stripe" ? "text-gold" : "text-white/40"} />
+                    <CreditCard size={20} className={paymentMethod === "stripe" ? "text-gold" : "text-ink/30"} />
                     <div>
-                      <p className="text-white text-sm font-semibold">Cartão de Crédito</p>
-                      <p className="text-white/40 text-xs">Via Stripe — Seguro</p>
+                      <p className="text-ink text-sm font-semibold">Cartão de Crédito</p>
+                      <p className="text-ink-muted text-xs">Via Stripe — Seguro</p>
                     </div>
                   </label>
 
-                  <label className={`flex items-center gap-4 p-4 cursor-pointer border transition-all ${paymentMethod === "pix" ? "border-gold bg-gold/5" : "border-dark-300 hover:border-dark-400"}`}>
+                  <label className={`flex items-center gap-4 p-4 cursor-pointer border transition-all ${
+                    paymentMethod === "pix" ? "border-gold bg-gold/5" : "border-cream-200 hover:border-cream-300"
+                  }`}>
                     <input {...register("paymentMethod")} type="radio" value="pix" className="accent-gold" />
-                    <QrCode size={20} className={paymentMethod === "pix" ? "text-gold" : "text-white/40"} />
+                    <QrCode size={20} className={paymentMethod === "pix" ? "text-gold" : "text-ink/30"} />
                     <div>
-                      <p className="text-white text-sm font-semibold">PIX</p>
-                      <p className="text-white/40 text-xs">Aprovação imediata</p>
+                      <p className="text-ink text-sm font-semibold">PIX</p>
+                      <p className="text-ink-muted text-xs">Aprovação imediata</p>
                     </div>
                   </label>
                 </div>
@@ -182,37 +184,37 @@ export default function CheckoutPage() {
 
             {/* Order summary */}
             <div className="lg:col-span-1">
-              <div className="bg-dark-100 border border-dark-300 p-6 sticky top-28">
-                <h2 className="font-serif text-xl text-white mb-6">Resumo</h2>
+              <div className="bg-white border border-cream-200 p-6 sticky top-28 shadow-sm">
+                <h2 className="font-serif text-xl text-ink mb-6">Resumo</h2>
 
                 {/* Items */}
                 <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
                   {items.map((item) => (
                     <div key={item.productId} className="flex gap-3">
-                      <div className="relative w-14 h-16 bg-dark-200 flex-shrink-0 overflow-hidden">
+                      <div className="relative w-14 h-16 bg-cream-50 flex-shrink-0 overflow-hidden">
                         {item.image && <Image src={item.image} alt={item.name} fill className="object-cover" />}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-white/80 text-xs font-sans font-medium line-clamp-2">{item.name}</p>
-                        <p className="text-white/40 text-xs">x{item.quantity}</p>
-                        <p className="text-gold text-sm font-semibold">{formatPrice(item.price * item.quantity)}</p>
+                        <p className="text-ink/80 text-xs font-sans font-medium line-clamp-2">{item.name}</p>
+                        <p className="text-ink-muted text-xs">x{item.quantity}</p>
+                        <p className="text-ink text-sm font-semibold">{formatPrice(item.price * item.quantity)}</p>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="space-y-2 mb-6 pt-4 border-t border-dark-300">
-                  <div className="flex justify-between text-sm text-white/60">
+                <div className="space-y-2 mb-6 pt-4 border-t border-cream-200">
+                  <div className="flex justify-between text-sm text-ink/60">
                     <span>Subtotal</span>
                     <span>{formatPrice(subtotal)}</span>
                   </div>
-                  <div className="flex justify-between text-sm text-white/60">
+                  <div className="flex justify-between text-sm text-ink/60">
                     <span>Frete</span>
-                    <span className={shipping === 0 ? "text-green-400" : ""}>{shipping === 0 ? "Grátis" : formatPrice(shipping)}</span>
+                    <span className={shipping === 0 ? "text-green-600" : ""}>{shipping === 0 ? "Grátis" : formatPrice(shipping)}</span>
                   </div>
-                  <div className="flex justify-between text-white font-bold pt-2 border-t border-dark-300">
+                  <div className="flex justify-between text-ink font-bold pt-2 border-t border-cream-200">
                     <span>Total</span>
-                    <span className="text-gold text-lg">{formatPrice(total)}</span>
+                    <span className="text-ink text-lg">{formatPrice(total)}</span>
                   </div>
                 </div>
 
@@ -232,7 +234,7 @@ export default function CheckoutPage() {
                   )}
                 </button>
 
-                <p className="text-center text-white/30 text-xs mt-3 font-sans flex items-center justify-center gap-1">
+                <p className="text-center text-ink/30 text-xs mt-3 font-sans flex items-center justify-center gap-1">
                   <Lock size={10} />
                   Pagamento 100% seguro e criptografado
                 </p>

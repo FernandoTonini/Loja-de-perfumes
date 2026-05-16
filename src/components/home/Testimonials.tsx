@@ -57,13 +57,8 @@ export function Testimonials() {
   }, []);
 
   return (
-    <section className="py-24 bg-dark relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gold blur-[150px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="py-24 bg-cream-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="section-subtitle mb-4">Nossos Clientes</p>
           <h2 className="section-title mb-4">
@@ -77,7 +72,11 @@ export function Testimonials() {
           {testimonials.slice(0, 3).map((t, i) => (
             <div
               key={t.name}
-              className={`bg-dark-100 border p-8 transition-all duration-500 ${i === current % 3 ? "border-gold/40 shadow-[0_0_30px_rgba(201,168,76,0.1)]" : "border-dark-300"}`}
+              className={`bg-white border p-8 transition-all duration-500 ${
+                i === current % 3
+                  ? "border-gold/40 shadow-[0_4px_30px_rgba(201,168,76,0.12)]"
+                  : "border-cream-200 shadow-sm"
+              }`}
             >
               {/* Stars */}
               <div className="flex gap-1 mb-4">
@@ -86,20 +85,20 @@ export function Testimonials() {
                 ))}
               </div>
 
-              <p className="text-white/70 text-sm font-sans leading-relaxed mb-6 italic">
+              <p className="text-ink-muted text-sm font-sans leading-relaxed mb-6 italic">
                 &ldquo;{t.text}&rdquo;
               </p>
 
-              <div className="flex items-center gap-3 pt-4 border-t border-dark-300">
-                <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center">
-                  <span className="text-gold text-sm font-semibold">{t.initials}</span>
+              <div className="flex items-center gap-3 pt-4 border-t border-cream-100">
+                <div className="w-10 h-10 rounded-full bg-gold/15 flex items-center justify-center">
+                  <span className="text-gold-dark text-sm font-semibold">{t.initials}</span>
                 </div>
                 <div>
-                  <p className="text-white text-sm font-semibold">{t.name}</p>
-                  <p className="text-white/40 text-xs">{t.city}</p>
+                  <p className="text-ink text-sm font-semibold">{t.name}</p>
+                  <p className="text-ink-muted text-xs">{t.city}</p>
                 </div>
                 <div className="ml-auto">
-                  <span className="text-gold/60 text-[10px] tracking-wide uppercase font-sans">{t.product}</span>
+                  <span className="text-gold-dark/70 text-[10px] tracking-wide uppercase font-sans">{t.product}</span>
                 </div>
               </div>
             </div>
@@ -112,7 +111,9 @@ export function Testimonials() {
             <button
               key={i}
               onClick={() => setCurrent(i)}
-              className={`transition-all duration-300 rounded-full ${i % 3 === current % 3 ? "w-6 h-1.5 bg-gold" : "w-1.5 h-1.5 bg-white/20"}`}
+              className={`transition-all duration-300 rounded-full ${
+                i % 3 === current % 3 ? "w-6 h-1.5 bg-gold" : "w-1.5 h-1.5 bg-ink/15 hover:bg-ink/30"
+              }`}
             />
           ))}
         </div>

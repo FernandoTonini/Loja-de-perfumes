@@ -9,7 +9,7 @@ interface Props {
 
 export function FeaturedProducts({ products }: Props) {
   return (
-    <section className="py-24 bg-dark">
+    <section className="py-24 bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -18,7 +18,7 @@ export function FeaturedProducts({ products }: Props) {
             Fragrâncias em <span className="gold-text italic">Destaque</span>
           </h2>
           <div className="divider-gold" />
-          <p className="text-white/50 font-sans text-base max-w-xl mx-auto mt-6 leading-relaxed">
+          <p className="text-ink-muted font-sans text-base max-w-xl mx-auto mt-6 leading-relaxed">
             Os perfumes mais amados da nossa coleção, escolhidos por nossa equipe de especialistas.
           </p>
         </div>

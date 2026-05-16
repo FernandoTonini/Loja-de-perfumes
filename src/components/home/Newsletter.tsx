@@ -16,23 +16,23 @@ export function Newsletter() {
   };
 
   return (
-    <section className="py-24 bg-dark-100 border-t border-dark-300">
+    <section className="py-24 bg-cream border-t border-cream-200">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="section-subtitle mb-4">Fique por Dentro</p>
         <h2 className="section-title mb-4">
           Receba Novidades e <span className="gold-text italic">Ofertas Exclusivas</span>
         </h2>
         <div className="divider-gold" />
-        <p className="text-white/50 font-sans text-sm leading-relaxed max-w-md mx-auto mt-6 mb-10">
+        <p className="text-ink-muted font-sans text-sm leading-relaxed max-w-md mx-auto mt-6 mb-10">
           Cadastre-se para receber lançamentos, promoções especiais e dicas do mundo das fragrâncias.
         </p>
 
         {submitted ? (
           <div className="bg-gold/10 border border-gold/30 px-8 py-6 inline-block">
-            <p className="text-gold font-serif text-xl italic">
+            <p className="text-gold-dark font-serif text-xl italic">
               Obrigado por se cadastrar!
             </p>
-            <p className="text-white/50 text-sm mt-2 font-sans">
+            <p className="text-ink-muted text-sm mt-2 font-sans">
               Em breve você receberá nossas novidades.
             </p>
           </div>
@@ -44,7 +44,7 @@ export function Newsletter() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Seu melhor e-mail"
               required
-              className="flex-1 bg-dark-200 border border-dark-300 border-r-0 px-5 py-4 text-white/80 placeholder-white/30 text-sm font-sans outline-none focus:border-gold/50 transition-colors"
+              className="flex-1 bg-white border border-cream-200 border-r-0 px-5 py-4 text-ink/80 placeholder-ink/30 text-sm font-sans outline-none focus:border-gold/60 transition-colors"
             />
             <button
               type="submit"
