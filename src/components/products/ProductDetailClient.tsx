@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { ShoppingBag, ChevronLeft, ChevronRight, Check, Minus, Plus, Package, Shield, Truck } from "lucide-react";
 import { Product } from "@/types";
 import { formatPrice, GENDER_LABELS } from "@/lib/utils";
@@ -64,13 +63,11 @@ export function ProductDetailClient({ product }: Props) {
           {/* Main image */}
           <div className="relative aspect-square bg-cream-50 overflow-hidden group border border-cream-200">
             {images[currentImage] ? (
-              <Image
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
                 src={images[currentImage]}
                 alt={product.name}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-                priority
+                className="absolute inset-0 w-full h-full object-cover"
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
@@ -88,13 +85,13 @@ export function ProductDetailClient({ product }: Props) {
               <>
                 <button
                   onClick={() => setCurrentImage((prev) => (prev - 1 + images.length) % images.length)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 text-ink flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:text-gold-dark shadow-sm"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 text-ink flex items-center justify-center lg:opacity-0 lg:group-hover:opacity-100 transition-opacity hover:bg-white hover:text-gold-dark shadow-sm"
                 >
                   <ChevronLeft size={20} />
                 </button>
                 <button
                   onClick={() => setCurrentImage((prev) => (prev + 1) % images.length)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 text-ink flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white hover:text-gold-dark shadow-sm"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 text-ink flex items-center justify-center lg:opacity-0 lg:group-hover:opacity-100 transition-opacity hover:bg-white hover:text-gold-dark shadow-sm"
                 >
                   <ChevronRight size={20} />
                 </button>
@@ -104,7 +101,7 @@ export function ProductDetailClient({ product }: Props) {
 
           {/* Thumbnails */}
           {images.length > 1 && (
-            <div className="flex gap-3">
+            <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-thin">
               {images.map((img, i) => (
                 <button
                   key={i}
@@ -113,7 +110,8 @@ export function ProductDetailClient({ product }: Props) {
                     i === currentImage ? "border-gold" : "border-cream-200 hover:border-gold/50"
                   }`}
                 >
-                  <Image src={img} alt="" fill sizes="80px" className="object-cover" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img} alt="" className="absolute inset-0 w-full h-full object-cover" />
                 </button>
               ))}
             </div>
